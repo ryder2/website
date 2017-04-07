@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $offreapplications = DB::table('offreapplications')->where('name', '=', Auth::user()->name)->get();
+        $offres = DB::table('offres')->where('city', '=', Auth::user()->ville)->get();
+        return view('home', ['offres' => $offres, 'offreapplications' => $offreapplications]);
     }
 }
