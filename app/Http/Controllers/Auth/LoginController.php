@@ -25,7 +25,15 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected function authenticated($request, $user) {
+
+        if ($user->mecano && $user->approuved) {
+            return redirect('/home');
+        } else if ($user->mecano && !$user->approuved) {
+            return redirect('/myprofile');
+        }
+        return redirect('/myoffers');  
+    }
 
     /**
      * Create a new controller instance.

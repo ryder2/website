@@ -25,8 +25,16 @@ class MyoffersController extends Controller
      */
     public function index()
     {
+        $offreapplications = [];
         $offres = DB::table('offres')->where('username', '=', Auth::user()->name)->get();
-        return view('myoffers', ['offres' => $offres]);
+
+        foreach ($offres as $offre) {
+            $applications = DB::table('offreapplications')->where('offre_id', '=', $offre->id)->get();
+            foreach ($applications as $application) {
+                array_push($offreapplications, $application);
+            }
+        }
+        return view('myoffers', ['offres' => $offres, 'offreapplications' => $offreapplications]);
     }
 
     public function delete(Request $request)
@@ -37,15 +45,44 @@ class MyoffersController extends Controller
         return redirect('myoffers');
     }
 
+    public function deleteofferapplication(Request $request)
+    {
+        $id = $request->idapplication;
+        $offreapplication = DB::table('offreapplications')->where('id', '=', $id);
+        $offreapplication->delete();
+        return redirect('home');
+    }
+
+    public function viewofferapplication(Request $request)
+    {
+        $id = $request->id;
+        $offreapplications = DB::table('offreapplications')->where('offre_id', '=', $id)->get();
+        
+        return view('viewofferapplication', ['offreapplications' => $offreapplications]);
+    }
+
     public function add()
     {
         return view('addoffers');
     }
+
     public function apply(Request $request)
     {
         $id = $request->id;
         $offres = DB::table('offres')->where('id', '=', $id)->get();
         return view('applyoffer', ['offres' => $offres]);
+    }
+        public function acceptofferapplication(Request $request)
+    {
+        $id = $request->id;
+        $address = $request->address;
+        if($address) {
+            $offre = DB::table('offreapplications')->where('id', '=', $id)->update(['accepted' => 1, 'address' => $address]); 
+        } else {
+            $offre = DB::table('offreapplications')->where('id', '=', $id)->update(['accepted' => 1]); 
+        }
+        
+        return redirect('myoffers');
     }
 
     public function applyonoffer(Request $request)
@@ -55,12 +92,14 @@ class MyoffersController extends Controller
         $montant = $request->montant;
         $sedeplace = $request->sedeplace;
         $fournitpiece = $request->fournitpiece;
+        $address = $request->address;
         DB::table('offreapplications')->insertGetId([
             'name' => $name,
             'offre_id' => $offre_id,
             'montant' => $montant,
             'sedeplace' => $sedeplace,
             'fournitpiece' => $fournitpiece,
+            'address' => $address,
         ]);
         return redirect('home');
     }
@@ -73,6 +112,11 @@ class MyoffersController extends Controller
         $country = $request->country;
         $title = $request->title;
         $message = $request->message;
+        $wanteddate = $request->wanteddate;
+
+        $quoted = preg_quote('!*\'();:@&=+$,/?%#[]','/');
+        $sanitized = preg_replace('/['.$quoted.']/', '', $wanteddate);
+
         DB::table('offres')->insertGetId([
             'username' => $username,
             'car' => $car,
@@ -80,6 +124,7 @@ class MyoffersController extends Controller
             'country' => $country,
             'title' => $title,
             'message' => $message,
+            'wanteddate' => $sanitized,
         ]);
         return redirect('myoffers');
     }

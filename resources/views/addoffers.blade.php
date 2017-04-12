@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+@if (!Auth::user()->mecano)
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -31,8 +32,13 @@
                                 <textarea id="message" rows="4" cols="50" name="message" form="myForm"></textarea>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="wanteddate" class="col-md-4 control-label">Date and time</label>
 
-
+                            <div class="col-md-6">
+                                <input id="wanteddate" type="datetime-local" class="form-control" name="wanteddate"></textarea>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <div class="col-md-6">
                                 <input id="username" type="hidden" class="form-control" name="username" value="{{ Auth::user()->name }}">
@@ -62,4 +68,13 @@
         </div>
     </div>
 </div>
+<script>
+    var today = new Date().toISOString();
+    today = today.substring(0, today.length - 8);
+    document.getElementById("wanteddate").value = today
+    document.getElementsByName("wanteddate")[0].setAttribute('min', today);
+</script>
+@else
+You can't acces this section
+@endif
 @endsection

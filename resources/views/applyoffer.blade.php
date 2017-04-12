@@ -22,14 +22,21 @@
                             <div class="checkbox">
                                 <label>
                                     <input type="hidden" name="sedeplace" value="0">
-                                    <input type="checkbox" value="1" name="sedeplace"> I fournit part
+                                    <input id="sedeplace" type="checkbox" value="1" name="sedeplace"> I move
                                 </label>
                             </div>
                             <div class="checkbox">
                                 <label>
                                     <input type="hidden" name="fournitpiece" value="0">
-                                    <input type="checkbox" value="1" name="fournitpiece"> I move
+                                    <input type="checkbox" value="1" name="fournitpiece"> I fournit part
                                 </label>
+                            </div>
+                            <div id="addressDiv" class="form-group">
+                                <label for="address" class="col-md-1 control-label">Address</label>
+
+                                <div class="col-md-6">
+                                    <input id="address" type="text" class="form-control" name="address">
+                                </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-md-6">
@@ -49,4 +56,15 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('#sedeplace').change(function () {
+            if (this.checked) 
+               $('#addressDiv').fadeOut('slow');
+            else 
+                $('#addressDiv').fadeIn('slow');
+        });
+    });
+</script>
 @endsection

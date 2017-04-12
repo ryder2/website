@@ -87,8 +87,12 @@
                 <li><a href="{{ route('register') }}">Register</a></li>
             @else
                 <li><a href="{{ url('/calendar') }}">Calendar</a></li>
-                <li><a href="{{ url('/myoffers') }}">My offers</a></li>
-                <li><a href="{{ url('/home') }}">Offers</a></li>
+                @if (!Auth::user()->mecano)
+                    <li><a href="{{ url('/myoffers') }}">My offers</a></li>
+                @endif
+                @if (Auth::user()->mecano && Auth::user()->approuved)
+                    <li><a href="{{ url('/home') }}">Offers</a></li>
+                @endif
                 <li><a href="{{ url('/myprofile') }}">My profile</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">

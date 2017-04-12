@@ -27,25 +27,72 @@ class CalenderController extends Controller
      */
     public function index()
     {
-        $offres = DB::table('offres')->where('username', '=', Auth::user()->name)->get();
-        $events = [];
-        $event = \Calendar::event(
-            "Valentine's Day", //event title
-            true, //full day event?
-            '2017-04-07', //start time, must be a DateTime object or valid DateTime format (http://bit.ly/1z7QWbg)
-            '2017-04-08', //end time, must be a DateTime object or valid DateTime format (http://bit.ly/1z7QWbg),
-            1, //optional event ID
-            [
-                'url' => 'http://full-calendar.io'
-            ]
-        );
+        if(Auth::user()->mecano) {
+            $calenderoffers = [];
+            $events = [];
 
-        array_push($events, $event);
+            $offres = DB::table('offreapplications')->where([['name', '=', Auth::user()->name], ['accepted', '=', 1]])->get();
+            foreach ($offres as $offre) {
+                $calenderoffer = DB::table('offres')->where('id', '=', $offre->offre_id)->get();
+                array_push($calenderoffers, $calenderoffer);
+            }
 
-        $eloquentEvent = EventModel::first(); //EventModel implements MaddHatter\LaravelFullcalendar\Event
+            foreach ($calenderoffers as $calenderofferfinal) {
+                $event = \Calendar::event(
+                $calenderofferfinal[0]->title, //event title
+                false, //full day event?
+                $calenderofferfinal[0]->wanteddate, //start time, must be a DateTime object or valid DateTime format (http://bit.ly/1z7QWbg)
+                $calenderofferfinal[0]->wanteddate, //end time, must be a DateTime object or valid DateTime format (http://bit.ly/1z7QWbg),
+                1, //optional event ID
+                [
+                    'url' => 'http://full-calendar.io'
+                ]
+            );
 
-        $calendar = \Calendar::addEvents($events); 
+            array_push($events, $event);
+            }
 
-        return view('calender', compact('calendar'));
+            $eloquentEvent = EventModel::first(); //EventModel implements MaddHatter\LaravelFullcalendar\Event
+
+            $calendar = \Calendar::addEvents($events); 
+
+            return view('calender', compact('calendar'));
+
+        } else {
+            $calenderoffers = [];
+            $events = [];
+
+            $offres = DB::table('offres')->where('username', '=', Auth::user()->name)->get();
+            foreach ($offres as $offre) {
+                $calenderoffer = DB::table('offreapplications')->where([['offre_id', '=', $offre->id], ['accepted', '=', 1]])->get();
+                foreach ($calenderoffer as $calenders) {
+                    if($calenders->offre_id == $offre->id) {
+                        array_push($calenderoffers, $offre); 
+                    }
+                }
+                
+            }
+
+            foreach ($calenderoffers as $calenderofferfinal) {
+                $event = \Calendar::event(
+                $calenderofferfinal->title, //event title
+                false, //full day event?
+                $calenderofferfinal->wanteddate, //start time, must be a DateTime object or valid DateTime format (http://bit.ly/1z7QWbg)
+                $calenderofferfinal->wanteddate, //end time, must be a DateTime object or valid DateTime format (http://bit.ly/1z7QWbg),
+                1, //optional event ID
+                [
+                    'url' => 'http://full-calendar.io'
+                ]
+            );
+
+            array_push($events, $event);
+            }
+
+            $eloquentEvent = EventModel::first(); //EventModel implements MaddHatter\LaravelFullcalendar\Event
+
+            $calendar = \Calendar::addEvents($events); 
+
+            return view('calender', compact('calendar'));
+        }
     }
 }
