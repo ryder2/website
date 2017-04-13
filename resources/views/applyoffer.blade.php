@@ -16,7 +16,7 @@
                                 <label for="montant" class="col-md-1 control-label">Montant</label>
 
                                 <div class="col-md-6">
-                                    <input id="montant" type="number" step="0.01" class="form-control" name="montant">
+                                    <input id="montant" type="number" step="0.01" class="form-control" name="montant" required>
                                 </div>
                             </div>
                             <div class="checkbox">

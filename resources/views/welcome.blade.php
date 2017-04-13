@@ -71,7 +71,15 @@
 
                     <ul class="dropdown-menu" role="menu">
                         <li>
-                            <a href="{{ url('/home') }}">
+                            @if(Auth::user()->approuved && Auth::user()->mecano)
+                                <a href="{{ url('/home') }}">
+                            @endif
+                            @if(!Auth::user()->approuved && Auth::user()->mecano)
+                                <a href="{{ url('/myprofile') }}">
+                            @endif
+                            @if(!Auth::user()->mecano)
+                                <a href="{{ url('/myoffers') }}">
+                            @endif
                                 Dashboard
                             </a>
                         </li>

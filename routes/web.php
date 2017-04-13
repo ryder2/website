@@ -29,7 +29,21 @@ Route::post('/applyonoffer', 'MyoffersController@applyonoffer');
 Route::post('/viewofferapplication', 'MyoffersController@viewofferapplication');
 Route::post('/acceptofferapplication', 'MyoffersController@acceptofferapplication');
 Route::get('/calendar', 'CalenderController@index');
+Route::get('/adminpanel', 'AdminpanelController@index');
+Route::post('/executeSearch', 'AdminpanelController@search');
+Route::get('/executeSearch', 'AdminpanelController@search');
+Route::post('/adminpanel', 'AdminpanelController@save');
 
 Route::get('/myprofile', 'Profile\MyprofileController@index');
 Route::get('/editprofile', 'Profile\MyprofileController@edit');
 Route::post('/saveprofile', 'Profile\MyprofileController@save');
+
+Route::get('/seemecanoprofile/{mecanoname}',[
+    'uses' => 'SeemecanoprofileController@switchInfo',
+    'as'   => 'seemecanoprofil'
+]);
+
+
+Route::group(['prefix' => 'admin'], function () {
+    Voyager::routes();
+});

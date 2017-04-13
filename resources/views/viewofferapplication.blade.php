@@ -8,7 +8,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Montant : {{ $offreapplication->montant }} $</div>
                     <div class="panel-body">
-                        Mechanic : {{ $offreapplication->name }}<br>
+                        Mechanic : <a href="{!! route('seemecanoprofil', ['name'=>$offreapplication->name]) !!}" class="btn btn-default">{{ $offreapplication->name }}</a><br>
                         Move : 
                         @if($offreapplication->sedeplace)
                              Yes 
