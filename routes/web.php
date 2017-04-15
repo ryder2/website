@@ -28,6 +28,7 @@ Route::post('/applyoffer', 'MyoffersController@apply');
 Route::post('/applyonoffer', 'MyoffersController@applyonoffer');
 Route::post('/viewofferapplication', 'MyoffersController@viewofferapplication');
 Route::post('/acceptofferapplication', 'MyoffersController@acceptofferapplication');
+Route::post('/completedofferapplication', 'MyoffersController@completedofferapplication');
 Route::get('/calendar', 'CalenderController@index');
 Route::get('/adminpanel', 'AdminpanelController@index');
 Route::post('/executeSearch', 'AdminpanelController@search');
@@ -37,6 +38,7 @@ Route::post('/adminpanel', 'AdminpanelController@save');
 Route::get('/myprofile', 'Profile\MyprofileController@index');
 Route::get('/editprofile', 'Profile\MyprofileController@edit');
 Route::post('/saveprofile', 'Profile\MyprofileController@save');
+Route::post('/ratemecano', 'Profile\MyprofileController@ratemecano');
 
 Route::get('/seemecanoprofile/{mecanoname}',[
     'uses' => 'SeemecanoprofileController@switchInfo',

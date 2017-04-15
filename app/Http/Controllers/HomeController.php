@@ -26,7 +26,7 @@ class HomeController extends Controller
     public function index()
     {
         $offreapplications = DB::table('offreapplications')->get();
-        $offres = DB::table('offres')->where('city', '=', Auth::user()->ville)->get();
+        $offres = DB::table('offres')->where([['city', '=', Auth::user()->ville], ['completed', '=', 0]])->get();
         return view('home', ['offres' => $offres, 'offreapplications' => $offreapplications]);
     }
 }

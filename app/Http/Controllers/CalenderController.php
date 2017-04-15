@@ -33,16 +33,17 @@ class CalenderController extends Controller
 
             $offres = DB::table('offreapplications')->where([['name', '=', Auth::user()->name], ['accepted', '=', 1]])->get();
             foreach ($offres as $offre) {
-                $calenderoffer = DB::table('offres')->where('id', '=', $offre->offre_id)->get();
-                array_push($calenderoffers, $calenderoffer);
+                $calenderoffer = DB::table('offres')->where('id', '=', $offre->offre_id)->first();
+                if(!$calenderoffer->completed)
+                    array_push($calenderoffers, $calenderoffer);
             }
 
             foreach ($calenderoffers as $calenderofferfinal) {
                 $event = \Calendar::event(
-                $calenderofferfinal[0]->title, //event title
+                $calenderofferfinal->title, //event title
                 false, //full day event?
-                $calenderofferfinal[0]->wanteddate, //start time, must be a DateTime object or valid DateTime format (http://bit.ly/1z7QWbg)
-                $calenderofferfinal[0]->wanteddate, //end time, must be a DateTime object or valid DateTime format (http://bit.ly/1z7QWbg),
+                $calenderofferfinal->wanteddate, //start time, must be a DateTime object or valid DateTime format (http://bit.ly/1z7QWbg)
+                $calenderofferfinal->wanteddate, //end time, must be a DateTime object or valid DateTime format (http://bit.ly/1z7QWbg),
                 1, //optional event ID
                 [
                     'url' => 'http://full-calendar.io'
@@ -64,10 +65,12 @@ class CalenderController extends Controller
 
             $offres = DB::table('offres')->where('username', '=', Auth::user()->name)->get();
             foreach ($offres as $offre) {
-                $calenderoffer = DB::table('offreapplications')->where([['offre_id', '=', $offre->id], ['accepted', '=', 1]])->get();
-                foreach ($calenderoffer as $calenders) {
-                    if($calenders->offre_id == $offre->id) {
-                        array_push($calenderoffers, $offre); 
+                if(!$offre->completed) {
+                    $calenderoffer = DB::table('offreapplications')->where([['offre_id', '=', $offre->id], ['accepted', '=', 1]])->get();
+                    foreach ($calenderoffer as $calenders) {
+                        if($calenders->offre_id == $offre->id) {
+                            array_push($calenderoffers, $offre); 
+                        }
                     }
                 }
                 

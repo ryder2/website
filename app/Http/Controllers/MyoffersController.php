@@ -53,6 +53,13 @@ class MyoffersController extends Controller
         return redirect('home');
     }
 
+    public function completedofferapplication(Request $request)
+    {
+        $id = $request->id;
+        $offreapplication = DB::table('offreapplications')->where('id', '=', $id)->update(['completed' => 1]);
+        return redirect('home');
+    }
+
     public function viewofferapplication(Request $request)
     {
         $id = $request->id;
@@ -92,7 +99,12 @@ class MyoffersController extends Controller
         $montant = $request->montant;
         $sedeplace = $request->sedeplace;
         $fournitpiece = $request->fournitpiece;
-        $address = $request->address;
+        if($sedeplace) {
+            $address = "";
+        } else {
+            $address = $request->address;
+        }
+        
         DB::table('offreapplications')->insertGetId([
             'name' => $name,
             'offre_id' => $offre_id,
@@ -125,6 +137,7 @@ class MyoffersController extends Controller
             'title' => $title,
             'message' => $message,
             'wanteddate' => $sanitized,
+            'completed' => 0,
         ]);
         return redirect('myoffers');
     }

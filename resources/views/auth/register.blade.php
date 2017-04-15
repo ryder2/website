@@ -129,12 +129,11 @@
                                 <div class="checkbox">
                                     <label>
                                         <input type="hidden" name="mecano" value="0">
-                                        <input type="checkbox" value="1" name="mecano" {{ old('mecano') ? 'checked' : '' }}> I want to register as a mechanic
+                                        <input class="mecano" type="checkbox" value="1" name="mecano" {{ old('mecano') ? 'checked' : '' }}> I want to register as a mechanic
                                     </label>
                                 </div>
                             </div>
                         </div>
-
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">

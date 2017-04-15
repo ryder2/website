@@ -4,7 +4,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
+                @if(count($offres))
                 @foreach($offres as $offre)
+                @if(!$offre->completed)
                     <?php $offerCanBeDeleted = false ?>
                     <?php $offerAsBeenAcceptedForHim = false ?>
                     <?php $offerAsBeenAcceptedNotForHim = false ?>
@@ -18,7 +20,6 @@
                             City : {{ $offre->city }} <br>
                             @if($offreapplications->count())
                                 @foreach($offreapplications as $offreapplication)
-                                        
                                     @if ($offreapplication->offre_id == $offre->id)
                                         @if (!$offreapplication->accepted)
                                             @if($offreapplication->name === Auth::user()->name)
@@ -81,6 +82,17 @@
                                                     @endif <br>
                                                     Address to do the work : {{ $acceptedoffer->address }}<br>
                                                     Fournit parts : @if($acceptedoffer->fournitpiece) Yes @else No @endif<br>
+                                                    @if(!$acceptedoffer->completed)
+                                                        <form role="form" method="POST" action="{{ url('/completedofferapplication') }}">
+                                                            <div class="form-group">
+                                                                {{ csrf_field() }}
+                                                                <input type="hidden" name="id" value="{{ $acceptedoffer->id }}">
+                                                            </div>
+                                                            <button type="submit" class="btn btn-success">Completed</button>
+                                                        </form>
+                                                    @else
+                                                        <br><b>This offer as been completed</b>
+                                                    @endif
                                                 </div>
                                     @endif
                                 @else
@@ -97,7 +109,11 @@
                             @endif
                         </div>
                     </div>
+                @endif
                 @endforeach
+                @else
+                There's no offer in your area at the moment please try again later
+                @endif
             </div>
         </div>
     </div>

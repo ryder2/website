@@ -4,13 +4,22 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <form class="form-horizontal" role="form" method="POST" action="{{ url('/saveprofile') }}">
+            <form class="form-horizontal" role="form" method="POST" enctype="multipart/form-data" action="{{ url('/saveprofile') }}">
                 <div class="panel panel-default">
                     <div class="panel-heading">Informations</div>
 
                     <div class="panel-body">
                         
                         {{ csrf_field() }}
+
+                        <div class="form-group">
+                            <label for="profileimg" class="col-md-4 control-label">Profile Image</label>
+
+                            <div class="col-md-6">
+                                <img id="profile_image" src="{{ Auth::user()->avatar ? Auth::user()->avatar : 'storage/users/profile/default.png'}}" width="150 " height="200">
+                                <input id="profileimg" type="file" class="form-control" name="profileimg" accept="image/*" onchange="preview_profile_image(event)">
+                            </div>
+                        </div>
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label for="name" class="col-md-4 control-label">Name</label>
@@ -110,7 +119,7 @@
 
                                 <div class="col-md-6">
                                  <input id="cartemecano" type="file" class="form-control" name="cartemecano" accept="image/*" onchange="preview_image(event)">
-                                    <img id="output_image"/ width="200 " height="100">
+                                    <img id="output_image" src="{{ Auth::user()->cartemecano ? Auth::user()->cartemecano : ''}}" width="200 " height="100">
                                 </div>
                             </div>
                         @endif
@@ -156,4 +165,26 @@
         </div>
     </div>
 </div>
+<script type='text/javascript'>
+        function preview_image(event) 
+        {
+         var reader = new FileReader();
+         reader.onload = function()
+         {
+          var output = document.getElementById('output_image');
+          output.src = reader.result;
+         }
+         reader.readAsDataURL(event.target.files[0]);
+        }
+        function preview_profile_image(event) 
+        {
+         var reader = new FileReader();
+         reader.onload = function()
+         {
+          var output = document.getElementById('profile_image');
+          output.src = reader.result;
+         }
+         reader.readAsDataURL(event.target.files[0]);
+        }
+</script>
 @endsection
