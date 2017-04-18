@@ -18,6 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+Route::get('register/verify/{token}', 'Auth\RegisterController@verify'); 
 
 Route::get('/myoffers', 'MyoffersController@index');
 Route::get('/deleteoffer', 'MyoffersController@delete');
@@ -26,10 +27,13 @@ Route::get('/addoffer', 'MyoffersController@add');
 Route::post('/addofferrecord', 'MyoffersController@create');
 Route::post('/applyoffer', 'MyoffersController@apply');
 Route::post('/applyonoffer', 'MyoffersController@applyonoffer');
+
 Route::post('/viewofferapplication', 'MyoffersController@viewofferapplication');
 Route::post('/acceptofferapplication', 'MyoffersController@acceptofferapplication');
 Route::post('/completedofferapplication', 'MyoffersController@completedofferapplication');
+
 Route::get('/calendar', 'CalenderController@index');
+
 Route::get('/adminpanel', 'AdminpanelController@index');
 Route::post('/executeSearch', 'AdminpanelController@search');
 Route::get('/executeSearch', 'AdminpanelController@search');
@@ -49,3 +53,9 @@ Route::get('/seemecanoprofile/{mecanoname}',[
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });
+
+Route::post('/pay/{product}', [
+    'uses' => 'MyoffersController@postPayWithStripe',
+    'as' => 'pay',
+    'middleware' => 'auth'
+]);
