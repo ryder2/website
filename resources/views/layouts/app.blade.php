@@ -32,6 +32,7 @@
 
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.css"/>
 
+    <script type="text/javascript" src="https://www.carqueryapi.com/js/carquery.0.3.4.js"></script>
     <script type="text/javascript" src="{{ asset('js/modernizr.custom.js') }}"></script>
 
     <!-- Scripts -->

@@ -18,7 +18,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
-Route::get('register/verify/{token}', 'Auth\RegisterController@verify'); 
+Route::get('register/verify/{token}', 'Auth\RegisterController@verify');
+
+Route::get('/termsandconditions', 'TermsAndConditionsController@index'); 
 
 Route::get('/myoffers', 'MyoffersController@index');
 Route::get('/deleteoffer', 'MyoffersController@delete');

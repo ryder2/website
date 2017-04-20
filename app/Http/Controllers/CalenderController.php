@@ -46,7 +46,7 @@ class CalenderController extends Controller
                 $calenderofferfinal->wanteddate, //end time, must be a DateTime object or valid DateTime format (http://bit.ly/1z7QWbg),
                 1, //optional event ID
                 [
-                    'url' => 'http://full-calendar.io'
+                    'url' => 'http://laravel.dev/home'
                 ]
             );
 
@@ -84,7 +84,7 @@ class CalenderController extends Controller
                 $calenderofferfinal->wanteddate, //end time, must be a DateTime object or valid DateTime format (http://bit.ly/1z7QWbg),
                 1, //optional event ID
                 [
-                    'url' => 'http://full-calendar.io'
+                    'url' => 'http://laravel.dev/myoffers'
                 ]
             );
 

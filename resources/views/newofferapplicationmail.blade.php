@@ -259,9 +259,9 @@
                         <p>Hi {{$offre->username}},</p>
                         <p>Someone just applyed on one of your offer!</p>
                         <p>Mechanic : {{$offreapplication->name}} <br>
-                        	Price : {{$offreapplication->montant}}$<br>
-                        	Fourni parts : {{$offreapplication->fournitpiece}}<br>
-                        	Move : {{$offreapplication->sedeplace}}</p>
+                        	Price : {{number_format($offreapplication->montant, 2, '.', '')}}$<br>
+                        	Fourni parts : @if($offreapplication->fournitpiece) Yes @else No @endif<br>
+                        	Move : @if($offreapplication->sedeplace) Yes @else No @endif</p>
                         <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                           <tbody>
                             <tr>
@@ -269,7 +269,7 @@
                                 <table border="0" cellpadding="0" cellspacing="0">
                                   <tbody>
                                     <tr>
-                                      <td> <a href="http://htmlemail.io" target="_blank">View Your Offer!</a> </td>
+                                      <td> <a href="https://laravel.dev/myoffers" target="_blank">View Your Offer!</a> </td>
                                     </tr>
                                   </tbody>
                                 </table>

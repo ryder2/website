@@ -12,7 +12,7 @@
                     <?php $offerAsBeenAcceptedNotForHim = false ?>
                     <?php $offerCanBeApply = false ?>
                     <div class="panel panel-default">
-                        <div class="panel-heading">{{ $offre->title }} <i class="fa fa-exclamation pull-right" style="color:red;"></i></div>
+                        <div class="panel-heading">{{ $offre->title }} @if($offre->created_at > \Carbon\Carbon::now()->subDays(1))<i class="fa fa-exclamation pull-right" style="color:red;"></i>@endif</div>
 
                         <div class="panel-body">
                             Car : {{ $offre->car }} <br>
@@ -91,7 +91,8 @@
                                                             <button type="submit" class="btn btn-success">Completed</button>
                                                         </form>
                                                     @else
-                                                        <br><b>This offer as been completed</b>
+                                                        <br>
+                                                        <div class="alert alert-warning">This offer as been completed but not paid yet. Please make sure that your customer pay is bill.</div>
                                                     @endif
                                                 </div>
                                     @endif
@@ -118,15 +119,21 @@
         </div>
     </div>
     <script>
-        $(document).ready(function(){
-          $(".accepted").click(function(e){
-            e.preventDefault();
-            if ($('.offeracceptedDiv').is(':visible'))
-                $('.offeracceptedDiv').fadeOut('slow');
-            else 
-                $('.offeracceptedDiv').fadeIn('slow');
-          });
+    $(document).ready(function(){
+
+      $(".accepted").click(function(e){
+        e.preventDefault();
+        var acceptedIndex = $('.accepted').index(this);
+        $('.offeracceptedDiv').each(function(index, elm) {
+            if(acceptedIndex == index) {
+                if ($(elm).is(':visible'))
+                    $(elm).fadeOut('slow');
+                else 
+                    $(elm).fadeIn('slow');
+            }
         });
+      });
+    });
     </script>
 @else
     Good try buddy

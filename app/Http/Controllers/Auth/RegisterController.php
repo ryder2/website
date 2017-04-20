@@ -60,6 +60,7 @@ class RegisterController extends Controller
             'ville' => 'required|max:255',
             'province' => 'required|max:255',
             'pays' => 'required|max:255',
+            'TermsAndConditions' => 'accepted',
         ]);
     }
 

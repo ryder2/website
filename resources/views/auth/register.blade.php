@@ -134,6 +134,20 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group{{ $errors->has('TermsAndConditions') ? ' has-error' : '' }}">
+                            <div class="col-md-6 col-md-offset-4">
+                                <div class="checkbox">
+                                    <label>
+                                        <input class="TermsAndConditions" type="checkbox" name="TermsAndConditions" required {{ old('TermsAndConditions') ? 'checked' : '' }}> I agree with the <a href="/termsandconditions">terms and conditions</a>
+                                        @if ($errors->has('TermsAndConditions'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('TermsAndConditions') }}</strong>
+                                            </span>
+                                        @endif
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">

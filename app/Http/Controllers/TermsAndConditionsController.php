@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Auth;
 
-class HomeController extends Controller
+class TermsAndConditionsController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -15,7 +15,6 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
     }
 
     /**
@@ -25,8 +24,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $offreapplications = DB::table('offreapplications')->get();
-        $offres = DB::table('offres')->where([['city', '=', Auth::user()->ville], ['completed', '=', 0]])->orderBy('created_at','desc')->get();
-        return view('home', ['offres' => $offres, 'offreapplications' => $offreapplications]);
+        return view('termsandconditions');
     }
 }

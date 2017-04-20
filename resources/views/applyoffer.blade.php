@@ -1,5 +1,37 @@
 @extends('layouts.app')
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
 
+      .controls {
+        margin-top: 10px;
+        border: 1px solid transparent;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        height: 32px;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      }
+
+      #type-selector {
+        color: #fff;
+        background-color: #4d90fe;
+        padding: 5px 11px 0px 11px;
+      }
+
+      #type-selector label {
+        font-family: Roboto;
+        font-size: 13px;
+        font-weight: 300;
+      }
+      #target {
+        width: 345px;
+      }
+    </style>
 @section('content')
 <div class="container">
     <div class="row">
@@ -13,10 +45,24 @@
                         <form class="form-horizontal" role="form" method="POST" action="{{ action('MyoffersController@applyonoffer') }}">
                         {{ csrf_field() }}
                             <div class="form-group">
-                                <label for="montant" class="col-md-1 control-label">Montant</label>
+                                <label for="montant" class="col-md-1 control-label">Amount</label>
 
                                 <div class="col-md-6">
-                                    <input id="montant" type="number" step="0.01" class="form-control" name="montant" required>
+                                    <input id="montant" type="number" min="0.00" step="0.01" class="form-control amount" name="montant" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="transactionfees" class="col-md-1 control-label">Transaction Fees</label>
+                                <div class="col-md-6">
+                                  <label id="transactionfees" type="label" class="form-control" name="transactionfees"> </label>
+                                  <input id="transactionfeesbox" type="hidden" class="form-control" name="transactionfeesbox">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="total" class="col-md-1 control-label">Total</label>
+                                <div class="col-md-6">
+                                  <label id="total" type="label" class="form-control" name="total" required> </label>
+                                  <input id="totalbox" type="hidden" class="form-control" name="totalbox">
                                 </div>
                             </div>
                             <div class="checkbox">
@@ -30,15 +76,16 @@
                                     <input type="hidden" name="fournitpiece" value="0">
                                     <input type="checkbox" value="1" name="fournitpiece"> I fournit part
                                 </label>
-                            </div>
+                            </div><br>
                             <div id="addressDiv" class="form-group">
                                 <label for="address" class="col-md-1 control-label">Address</label>
 
                                 <div class="col-md-6">
-                                    <input id="pac-input" type="text" class="form-control test" name="address">
+                                    <input id="pac-input" type="text" class="form-control test" name="address"><br>
+                                    <div id="map"></div>
                                 </div>
-                                <div id="map"></div>
                             </div>
+
                             <div class="form-group">
                                 <div class="col-md-6">
                                     <input id="name" type="hidden" class="form-control" name="name" value="{{ Auth::user()->name }}">
@@ -67,6 +114,15 @@
             }
             else 
                 $('#addressDiv').fadeIn('slow');
+        });
+    });
+    $(document).ready(function () {
+        $('#montant').change(function () {
+          $('#transactionfeesbox').val( (0.30 + ($(this).val() * 0.1)).toFixed(2) );
+          $('#transactionfees').html ( $('#transactionfeesbox').val() );
+
+          $('#totalbox').val( (Number($(this).val()) + Number($('#transactionfeesbox').val())).toFixed(2) );
+          $('#total').html ( $('#totalbox').val() );
         });
     });
 </script>

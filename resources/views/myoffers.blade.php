@@ -50,7 +50,7 @@
                                 <div id="offeracceptedDiv" style="display: none;" class="offeracceptedDiv">
                                     <br>Date : {{ $offre->wanteddate }}<br>
                                     Mechanic Name : {{ $acceptedofferapplication->name }}<br>
-                                    Montant : {{ $acceptedofferapplication->montant }} $ <br>
+                                    Montant : {{ number_format($acceptedofferapplication->montant, 2) }} $ <br>
                                     Move : 
                                     @if($acceptedofferapplication->sedeplace)
                                          Yes 
@@ -66,7 +66,6 @@
                                     @endif<br>
                                     @if($acceptedofferapplication->completed)
                                         <form role="form" method="POST" action="{{ route('pay',$acceptedofferapplication->id) }}">
-                                            <div class="form-group">
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                 <div class="stars">
                                                     <input class="star star-5 {{ $acceptedofferapplication->id }}" id="star-5{{ $acceptedofferapplication->id }}" type="radio" value="5" name="star"/>
@@ -81,15 +80,15 @@
                                                     <label class="star star-1 {{ $acceptedofferapplication->id }}" for="star-1{{ $acceptedofferapplication->id }}"></label>
                                                 </div>
                                                 <input id="{{ $acceptedofferapplication->id }}" class="rating" type="hidden" value="0" name="rating"> <br>
-                                                Comment : <input type="text" name="comment" required>
+                                                Comment : <input type="text" name="comment" required><br><br>
                                                 <input type="hidden" name="mecanoName" value="{{ $acceptedofferapplication->name }}">
                                                 <input type="hidden" name="offreid" value="{{ $offre->id }}">
-                                            </div>
                                             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                                 data-key="pk_test_kJGCpNwM6w61Su1koNNv1Jf9"
-                                                data-amount="{{ $acceptedofferapplication->montant }}"
-                                                data-name="Stripe.com"
-                                                data-description="Widget"
+                                                data-amount="{{ preg_replace('|[^0-9]|i', '', number_format($acceptedofferapplication->montant, 2)) }}"
+                                                data-name="RoadMecs"
+                                                data-email="{{Auth::user()->email}}"
+                                                data-description="{{$offre->title}}"
                                                 data-locale="auto">
                                             </script>
                                         </form>

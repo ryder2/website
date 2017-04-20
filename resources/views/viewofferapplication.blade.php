@@ -40,7 +40,7 @@
             @if(count($offreapplications))
             @foreach($offreapplications as $offreapplication)
                 <div class="panel panel-default">
-                    <div class="panel-heading">Montant : {{ $offreapplication->montant }} $</div>
+                    <div class="panel-heading">Montant : {{ number_format($offreapplication->montant, 2, '.', '') }} $</div>
                     <div class="panel-body">
                         Mechanic : <a href="{!! route('seemecanoprofil', ['name'=>$offreapplication->name]) !!}" class="btn btn-default">{{ $offreapplication->name }}</a><br>
                         Move : 
@@ -60,10 +60,10 @@
                                     <label for="address" class="col-md-1 control-label">Address</label>
 
                                     <div class="col-md-6">
-                                        <input id="pac-input" type="text" class="form-control" name="address">
+                                        <input id="pac-input" type="text" class="form-control" name="address" required>
                                     </div>
-                                    <div hidden="true" id="map"></div>
                                 </div>
+                                <div id="map"></div> <br>
                             @endif
                             <div class="form-group">
                                 <div class="col-md-8 col-md-offset-0">

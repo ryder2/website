@@ -10,6 +10,7 @@ use App\Review;
 use App\User;
 use Mail;
 use App\Mail\NewOffer;
+use Carbon\Carbon;
 
 class MyoffersController extends Controller
 {
@@ -31,7 +32,7 @@ class MyoffersController extends Controller
     public function index()
     {
         $offreapplications = [];
-        $offres = DB::table('offres')->where('username', '=', Auth::user()->name)->get();
+        $offres = DB::table('offres')->where('username', '=', Auth::user()->name)->orderBy('created_at','desc')->get();
 
         foreach ($offres as $offre) {
             $applications = DB::table('offreapplications')->where('offre_id', '=', $offre->id)->get();
@@ -68,14 +69,15 @@ class MyoffersController extends Controller
     public function viewofferapplication(Request $request)
     {
         $id = $request->id;
-        $offreapplications = DB::table('offreapplications')->where('offre_id', '=', $id)->get();
+        $offreapplications = DB::table('offreapplications')->where('offre_id', '=', $id)->orderBy('created_at','desc')->get();
         
         return view('viewofferapplication', ['offreapplications' => $offreapplications]);
     }
 
     public function add()
     {
-        return view('addoffers');
+        $jobtypes = DB::table('typetravail')->get();
+        return view('addoffers', ['jobtypes' => $jobtypes]);
     }
 
     public function apply(Request $request)
@@ -101,7 +103,7 @@ class MyoffersController extends Controller
     {
         $name = $request->name;
         $offre_id = $request->offre_id;
-        $montant = $request->montant;
+        $montant = number_format($request->totalbox, 2, '.', '');
         $sedeplace = $request->sedeplace;
         $fournitpiece = $request->fournitpiece;
         if($sedeplace) {
@@ -130,12 +132,17 @@ class MyoffersController extends Controller
     public function create(Request $request)
     {
         $username = $request->username;
-        $car = $request->car;
+        $caryears = $request->car_years;
+        $carmakes = $request->car_makes_txt;
+        $carmodels = $request->car_models;
+        $carmodeltrims = $request->car_model_trims_txt;
         $city = $request->city;
         $country = $request->country;
         $title = $request->title;
         $message = $request->message;
         $wanteddate = $request->wanteddate;
+
+        $car = $caryears . " " . $carmakes . " " . $carmodels . " " . $carmodeltrims . " "; 
 
         $quoted = preg_quote('!*\'();:@&=+$,/?%#[]','/');
         $sanitized = preg_replace('/['.$quoted.']/', '', $wanteddate);
@@ -214,6 +221,7 @@ class MyoffersController extends Controller
     public function createStripeCharge($product_id, $product_price, $product_name, $customer)
     {
         try {
+            $product_price = preg_replace('|[^0-9]|i', '', number_format($product_price, 2));
             $charge = \Stripe\Charge::create(array(
                 "amount" => $product_price,
                 "currency" => "CAD",

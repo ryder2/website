@@ -7,7 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Informations</div>
                 <div class="panel-body">
-                    <center><img id="profileimage" src="{{ $mecano->avatar ? $mecano->avatar : '/storage/users/profile/default.png'}}" width="150 " height="200"> <br><br>
+                    <center><img id="profileimage" src="{{ $mecano->avatar ? '/' . $mecano->avatar : '/storage/users/profile/default.png'}}" width="150 " height="200"> <br><br>
                         Name : {{ $mecano->name }} <br>
                         Mechanic : 
 

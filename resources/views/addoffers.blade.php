@@ -15,28 +15,44 @@
                             <label for="car" class="col-md-4 control-label">Car</label>
 
                             <div class="col-md-6">
-                                <input id="car" type="text" class="form-control" name="car" autofocus>
+                                <select name="car_years" class="form-control" id="car_years" form="myForm" required></select>  
+                                <select name="car_makes" class="form-control" id="car_makes" form="myForm" required></select> 
+                                <select name="car_models" class="form-control" id="car_models" form="myForm" required></select>
+                                <select name="car_model_trims" class="form-control" id="car_model_trims" form="myForm" required></select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="title" class="col-md-4 control-label">Title</label>
-
                             <div class="col-md-6">
-                                <input id="title" type="text" class="form-control" name="title">
+                                <input id="car_model_trims_txt" type="hidden" class="form-control" name="car_model_trims_txt">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <input id="car_makes_txt" type="hidden" class="form-control" name="car_makes_txt">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="title" class="col-md-4 control-label">Type of job</label>
+                            <div class="col-md-6">
+                                <select class="form-control" name="title">
+                                    @foreach($jobtypes as $jobtype)
+                                      <option value="{{$jobtype->job}}">{{$jobtype->job}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="message" class="col-md-4 control-label">Message</label>
 
-                            <div class="col-md-6">
-                                <textarea id="message" rows="4" cols="50" name="message" form="myForm"></textarea>
+                            <div class="col-md-6 textwrapper">
+                                <textarea id="message" class="form-control" rows="4" cols="5" name="message" form="myForm" required></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="wanteddate" class="col-md-4 control-label">Date and time</label>
 
                             <div class="col-md-6">
-                                <input id="wanteddate" type="datetime-local" class="form-control" name="wanteddate"></textarea>
+                                <input id="wanteddate" type="datetime-local" class="form-control" name="wanteddate" required></textarea>
                             </div>
                         </div>
                         <div class="form-group">
@@ -74,7 +90,20 @@
     document.getElementById("wanteddate").value = today
     document.getElementsByName("wanteddate")[0].setAttribute('min', today);
 </script>
+<script type="text/javascript">
+    $(document).ready(
+    function()
+    {
+         var carquery = new CarQuery();
+         carquery.init();
+         carquery.initYearMakeModelTrim('car_years', 'car_makes', 'car_models', 'car_model_trims');
+    });
+    $("#myForm").submit(function(){
+        $("[name=car_model_trims_txt]").val($("[name=car_model_trims]").find("option:selected").text());
+        $("[name=car_makes_txt]").val($("[name=car_makes]").find("option:selected").text());
+    });
+</script>
 @else
-You can't acces this section
+    You can't acces this section
 @endif
 @endsection
