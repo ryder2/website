@@ -61,6 +61,9 @@ class RegisterController extends Controller
             'province' => 'required|max:255',
             'pays' => 'required|max:255',
             'TermsAndConditions' => 'accepted',
+            'dobyear' => 'required',
+            'dobmonth' => 'required',
+            'dobday' => 'required',
         ]);
     }
 
@@ -82,6 +85,9 @@ class RegisterController extends Controller
             'province' => $data['province'],
             'pays' => $data['pays'],
             'mecano' => $data['mecano'],
+            'dobyear' => $data['dobyear'],
+            'dobmonth' => $data['dobmonth'],
+            'dobday' => $data['dobday'],
             'email_token' => str_random(10),
         ]);
     }

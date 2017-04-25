@@ -23,6 +23,14 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="form-group{{ $errors->has('dob') ? ' has-error' : '' }}">
+                            <label for="dob" class="col-md-4 control-label">Date of birth</label>
+                            <div class="col-md-6" name="dob">
+                                <select class="form-control" name="dobday" id="dobday" required></select>
+                                <select class="form-control" name="dobmonth" id="dobmonth" required></select>
+                                <select class="form-control" name="dobyear" id="dobyear" required></select>
+                            </div>
+                        </div>
                         <div class="form-group{{ $errors->has('rue') ? ' has-error' : '' }}">
                             <label for="rue" class="col-md-4 control-label">Street</label>
 
@@ -161,4 +169,27 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" src="{{ asset('js/dobPicker.js') }}"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+      $.dobPicker({
+        // Selectopr IDs
+        daySelector: '#dobday',
+        monthSelector: '#dobmonth',
+        yearSelector: '#dobyear',
+
+        // Default option values
+        dayDefault: 'Day',
+        monthDefault: 'Month',
+        yearDefault: 'Year',
+
+        // Minimum age
+        minimumAge: 12,
+
+        // Maximum age
+        maximumAge: 99
+      });
+    });
+</script>
+
 @endsection

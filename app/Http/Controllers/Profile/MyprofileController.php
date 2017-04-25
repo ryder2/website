@@ -29,12 +29,19 @@ class MyprofileController extends Controller
      */
     public function index()
     {
+        $account = null;
         $id = Auth::user()->id;
         $product = User::find($id);
         // Get all reviews that are not spam for the product and paginate them
         $reviews = $product->reviews()->approved()->notSpam()->orderBy('created_at','desc')->paginate(100);
 
-        return view('profile\view', ['reviews' => $reviews]);
+        if(substr( Auth::user()->stripe_id, 0, 4 ) === "acct") {
+            \Stripe\Stripe::setApiKey("sk_test_oXWrbKryk4Up33w2LZTQ3gK6");
+
+            $account = \Stripe\Account::retrieve(Auth::user()->stripe_id);
+        }
+
+        return view('profile\view', ['reviews' => $reviews, 'account' => $account]);
     }
 
 

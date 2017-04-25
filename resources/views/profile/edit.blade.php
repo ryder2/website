@@ -115,7 +115,7 @@
                         </div>
                         @if (Auth::user()->mecano == 1)
                             <div class="form-group">
-                                <label for="cartemecano" class="col-md-4 control-label">CPA card</label>
+                                <label for="cartemecano" class="col-md-4 control-label">Mechanic card</label>
 
                                 <div class="col-md-6">
                                  <input id="cartemecano" type="file" class="form-control" name="cartemecano" accept="image/*" onchange="preview_image(event)">

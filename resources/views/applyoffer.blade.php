@@ -52,7 +52,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="transactionfees" class="col-md-1 control-label">Transaction Fees</label>
+                                <label for="transactionfees" class="col-md-1 control-label">Fees</label>
                                 <div class="col-md-6">
                                   <label id="transactionfees" type="label" class="form-control" name="transactionfees"> </label>
                                   <input id="transactionfeesbox" type="hidden" class="form-control" name="transactionfeesbox">
@@ -118,8 +118,13 @@
     });
     $(document).ready(function () {
         $('#montant').change(function () {
-          $('#transactionfeesbox').val( (0.30 + ($(this).val() * 0.1)).toFixed(2) );
-          $('#transactionfees').html ( $('#transactionfeesbox').val() );
+          if(($(this).val()) > 275) {
+            $('#transactionfeesbox').val( (0.30 + ($(this).val() * 0.029) + 50).toFixed(2) );
+            $('#transactionfees').html ( $('#transactionfeesbox').val() );
+          } else {
+            $('#transactionfeesbox').val( (0.30 + ($(this).val() * 0.029) + ($(this).val() * 0.15)).toFixed(2) );
+            $('#transactionfees').html ( $('#transactionfeesbox').val() );
+          }
 
           $('#totalbox').val( (Number($(this).val()) + Number($('#transactionfeesbox').val())).toFixed(2) );
           $('#total').html ( $('#totalbox').val() );

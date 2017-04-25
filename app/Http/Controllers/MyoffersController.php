@@ -178,7 +178,7 @@ class MyoffersController extends Controller
 
         $offre = DB::table('offres')->where('id', '=', $request->input('offreid'))->update(['completed' => 1]);
         $product = DB::table('offreapplications')->where('id', '=', $product)->first();
-        return $this->chargeCustomer($product->id, $product->montant, $product->name, $request->input('stripeToken'));
+        return $this->chargeCustomer($product->id, $product->montant, $product->name, $request->input('stripeToken'), $mecano);
     }
  
    /**
@@ -191,7 +191,7 @@ class MyoffersController extends Controller
     * @param string $token
     * @return createStripeCharge()
     */
-    public function chargeCustomer($product_id, $product_price, $product_name, $token)
+    public function chargeCustomer($product_id, $product_price, $product_name, $token, $mecano)
     {
         \Stripe\Stripe::setApiKey('sk_test_oXWrbKryk4Up33w2LZTQ3gK6');
         
@@ -204,7 +204,7 @@ class MyoffersController extends Controller
             $customer = \Stripe\Customer::retrieve(Auth::user()->stripe_id);
         }
  
-        return $this->createStripeCharge($product_id, $product_price, $product_name, $customer);
+        return $this->createStripeCharge($product_id, $product_price, $product_name, $customer, $mecano);
     }
  
    /**
@@ -218,7 +218,7 @@ class MyoffersController extends Controller
     * @param Stripe\Customer $customer
     * @return postStoreOrder()
     */
-    public function createStripeCharge($product_id, $product_price, $product_name, $customer)
+    public function createStripeCharge($product_id, $product_price, $product_name, $customer, $mecano)
     {
         try {
             $product_price = preg_replace('|[^0-9]|i', '', number_format($product_price, 2));
@@ -226,6 +226,8 @@ class MyoffersController extends Controller
                 "amount" => $product_price,
                 "currency" => "CAD",
                 "customer" => $customer->id,
+                "destination" => $mecano->stripe_id,
+                "application_fee" => $product_price * 0.5,
                 "description" => $product_name
             ));
         } catch(\Stripe\Error\Card $e) {
