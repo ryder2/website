@@ -42,7 +42,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Montant : {{ number_format($offreapplication->montant, 2, '.', '') }} $</div>
                     <div class="panel-body">
-                        Mechanic : <a href="{!! route('seemecanoprofil', ['name'=>$offreapplication->name]) !!}" class="btn btn-default">{{ $offreapplication->name }}</a><br>
+                        Mechanic : <a href="{!! route('seemecanoprofil', ['name'=>$offreapplication->user_id]) !!}" class="btn btn-default">{{ App\User::find($offreapplication->user_id)->name }}</a><br>
                         Move : 
                         @if($offreapplication->sedeplace)
                              Yes 
@@ -64,6 +64,9 @@
                                     </div>
                                 </div>
                                 <div id="map"></div> <br>
+                            @else
+                              <textarea id="pac-input" type="text" name="address"></textarea><br><br>
+                              <div id="map"></div> <br>
                             @endif
                             <div class="form-group">
                                 <div class="col-md-8 col-md-offset-0">
@@ -99,7 +102,7 @@
             };
 
             infoWindow.setPosition(pos);
-            infoWindow.setContent('Location found.');
+            infoWindow.setContent('You are here!');
             map.setCenter(pos);
           }, function() {
             handleLocationError(true, infoWindow, map.getCenter());

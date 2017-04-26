@@ -20,7 +20,8 @@ Auth::routes();
 Route::get('/home', 'HomeController@index');
 Route::get('register/verify/{token}', 'Auth\RegisterController@verify');
 
-Route::post('/bankaccountsetup', 'BankAccountManagingController@index'); 
+Route::post('/bankaccountsetup', 'BankAccountManagingController@index');
+Route::post('/bankaccountmodify', 'BankAccountManagingController@modify'); 
 
 Route::get('/termsandconditions', 'TermsAndConditionsController@index'); 
 

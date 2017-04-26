@@ -256,9 +256,9 @@
                   <table border="0" cellpadding="0" cellspacing="0">
                     <tr>
                       <td>
-                        <p>Hi {{$offre->username}},</p>
+                        <p>Hi {{$user->name}},</p>
                         <p>Someone just applyed on one of your offer!</p>
-                        <p>Mechanic : {{$offreapplication->name}} <br>
+                        <p>Mechanic : {{$mecano->name}} <br>
                         	Price : {{number_format($offreapplication->montant, 2, '.', '')}}$<br>
                         	Fourni parts : @if($offreapplication->fournitpiece) Yes @else No @endif<br>
                         	Move : @if($offreapplication->sedeplace) Yes @else No @endif</p>

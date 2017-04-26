@@ -88,7 +88,7 @@
 
                             <div class="form-group">
                                 <div class="col-md-6">
-                                    <input id="name" type="hidden" class="form-control" name="name" value="{{ Auth::user()->name }}">
+                                    <input id="name" type="hidden" class="form-control" name="user_id" value="{{ Auth::user()->id }}">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -118,15 +118,15 @@
     });
     $(document).ready(function () {
         $('#montant').change(function () {
-          if(($(this).val()) > 275) {
+          if(($(this).val()) > 500) {
             $('#transactionfeesbox').val( (0.30 + ($(this).val() * 0.029) + 50).toFixed(2) );
             $('#transactionfees').html ( $('#transactionfeesbox').val() );
           } else {
-            $('#transactionfeesbox').val( (0.30 + ($(this).val() * 0.029) + ($(this).val() * 0.15)).toFixed(2) );
+            $('#transactionfeesbox').val( (0.30 + ($(this).val() * 0.129) ).toFixed(2) );
             $('#transactionfees').html ( $('#transactionfeesbox').val() );
           }
 
-          $('#totalbox').val( (Number($(this).val()) + Number($('#transactionfeesbox').val())).toFixed(2) );
+          $('#totalbox').val( (Number($(this).val()) - Number($('#transactionfeesbox').val())).toFixed(2) );
           $('#total').html ( $('#totalbox').val() );
         });
     });
@@ -150,7 +150,7 @@
             };
 
             infoWindow.setPosition(pos);
-            infoWindow.setContent('Location found.');
+            infoWindow.setContent('You are here.');
             map.setCenter(pos);
           }, function() {
             handleLocationError(true, infoWindow, map.getCenter());

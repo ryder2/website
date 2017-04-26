@@ -7,6 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
+use App\User;
 class NewOffer extends Mailable
 {
     use Queueable, SerializesModels;
@@ -34,6 +35,8 @@ class NewOffer extends Mailable
      */
     public function build()
     {
-        return $this->view('newofferapplicationmail')->with(['offreapplication' => $this->offreapplication, 'offre' => $this->offre,]);
+        $user = User::find($this->offre->user_id);
+        $mecano = User::find($this->offreapplication->user_id);
+        return $this->view('newofferapplicationmail')->with(['offreapplication' => $this->offreapplication, 'offre' => $this->offre, 'user' => $user, 'mecano' => $mecano,]);
     }
 }

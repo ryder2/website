@@ -31,7 +31,7 @@ class CalenderController extends Controller
             $calenderoffers = [];
             $events = [];
 
-            $offres = DB::table('offreapplications')->where([['name', '=', Auth::user()->name], ['accepted', '=', 1]])->get();
+            $offres = DB::table('offreapplications')->where([['user_id', '=', Auth::user()->id], ['accepted', '=', 1]])->get();
             foreach ($offres as $offre) {
                 $calenderoffer = DB::table('offres')->where('id', '=', $offre->offre_id)->first();
                 if(!$calenderoffer->completed)
@@ -63,7 +63,7 @@ class CalenderController extends Controller
             $calenderoffers = [];
             $events = [];
 
-            $offres = DB::table('offres')->where('username', '=', Auth::user()->name)->get();
+            $offres = DB::table('offres')->where('user_id', '=', Auth::user()->id)->get();
             foreach ($offres as $offre) {
                 if(!$offre->completed) {
                     $calenderoffer = DB::table('offreapplications')->where([['offre_id', '=', $offre->id], ['accepted', '=', 1]])->get();

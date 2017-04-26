@@ -5,6 +5,11 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
+            @if (session('warning'))
+                <div class="alert alert-warning">
+                    {{ session('warning') }}
+                </div>
+            @endif
             <button type="button" class="btn btn-success" onclick="window.location='{{ url("/addoffer") }}'">Add new offer</button> <br><br>
             @foreach($offres as $offre)
                 @if(!$offre->completed)
@@ -45,11 +50,15 @@
                                     <button type="submit" class="btn btn-danger pull-right">Delete</button>
                                 </form>
                             @else
-                                <br><br><button id="seeacceptedoffer" name="seeacceptedoffer" type="button" class="btn btn-success accepted">You already accepted an offer. See accepted offers</button>
+                                @if($acceptedofferapplication->completed)
+                                    <br><br><button id="seeacceptedoffer" name="seeacceptedoffer" type="button" class="btn btn-danger accepted">Completed, Please pay your bill</button>
+                                @else
+                                    <br><br><button id="seeacceptedoffer" name="seeacceptedoffer" type="button" class="btn btn-success accepted">You already accepted an offer. See accepted offers</button>
+                                @endif
 
                                 <div id="offeracceptedDiv" style="display: none;" class="offeracceptedDiv">
                                     <br>Date : {{ $offre->wanteddate }}<br>
-                                    Mechanic Name : {{ $acceptedofferapplication->name }}<br>
+                                    Mechanic Name : <a href="{!! route('seemecanoprofil', ['name'=>$offreapplication->user_id]) !!}" class="btn btn-default">{{ App\User::find($offreapplication->user_id)->name }}</a><br>
                                     Montant : {{ number_format($acceptedofferapplication->montant, 2) }} $ <br>
                                     Move : 
                                     @if($acceptedofferapplication->sedeplace)
@@ -81,7 +90,7 @@
                                                 </div>
                                                 <input id="{{ $acceptedofferapplication->id }}" class="rating" type="hidden" value="0" name="rating"> <br>
                                                 Comment : <input type="text" name="comment" required><br><br>
-                                                <input type="hidden" name="mecanoName" value="{{ $acceptedofferapplication->name }}">
+                                                <input type="hidden" name="user_id" value="{{ $offreapplication->user_id }}">
                                                 <input type="hidden" name="offreid" value="{{ $offre->id }}">
                                             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                                 data-key="pk_test_kJGCpNwM6w61Su1koNNv1Jf9"
@@ -89,6 +98,7 @@
                                                 data-name="RoadMecs"
                                                 data-email="{{Auth::user()->email}}"
                                                 data-description="{{$offre->title}}"
+                                                data-currency="cad"
                                                 data-locale="auto">
                                             </script>
                                         </form>

@@ -32,7 +32,7 @@ class MyoffersController extends Controller
     public function index()
     {
         $offreapplications = [];
-        $offres = DB::table('offres')->where('username', '=', Auth::user()->name)->orderBy('created_at','desc')->get();
+        $offres = DB::table('offres')->where('user_id', '=', Auth::user()->id)->orderBy('created_at','desc')->get();
 
         foreach ($offres as $offre) {
             $applications = DB::table('offreapplications')->where('offre_id', '=', $offre->id)->get();
@@ -86,12 +86,28 @@ class MyoffersController extends Controller
         $offres = DB::table('offres')->where('id', '=', $id)->get();
         return view('applyoffer', ['offres' => $offres]);
     }
-        public function acceptofferapplication(Request $request)
+
+    public function acceptofferapplication(Request $request)
     {
         $id = $request->id;
         $address = $request->address;
-        if($address) {
-            $offre = DB::table('offreapplications')->where('id', '=', $id)->update(['accepted' => 1, 'address' => $address]); 
+        $application = DB::table('offreapplications')->where('id', '=', $id)->first();
+        $offre = DB::table('offres')->where('id', '=', $application->offre_id)->first();
+
+
+        $unwanted_array = array(    'Š'=>'S', 'š'=>'s', 'Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E',
+                            'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U',
+                            'Ú'=>'U', 'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss', 'à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a', 'å'=>'a', 'æ'=>'a', 'ç'=>'c',
+                            'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i', 'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o',
+                            'ö'=>'o', 'ø'=>'o', 'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y' );
+        $address = strtr( $address, $unwanted_array );
+
+        if(!$application->address) {
+            if (strpos($address, strtr( $offre->city, $unwanted_array )) === false) {
+                return redirect('myoffers')->with('warning', 'Please give an address in ' . $offre->city);
+            } else {
+                $offre = DB::table('offreapplications')->where('id', '=', $id)->update(['accepted' => 1, 'address' => $address]); 
+            }
         } else {
             $offre = DB::table('offreapplications')->where('id', '=', $id)->update(['accepted' => 1]); 
         }
@@ -101,9 +117,9 @@ class MyoffersController extends Controller
 
     public function applyonoffer(Request $request)
     {
-        $name = $request->name;
+        $user_id = $request->user_id;
         $offre_id = $request->offre_id;
-        $montant = number_format($request->totalbox, 2, '.', '');
+        $montant = number_format($request->montant, 2, '.', '');
         $sedeplace = $request->sedeplace;
         $fournitpiece = $request->fournitpiece;
         if($sedeplace) {
@@ -113,7 +129,7 @@ class MyoffersController extends Controller
         }
         
         $offreApplicationId = DB::table('offreapplications')->insertGetId([
-            'name' => $name,
+            'user_id' => $user_id,
             'offre_id' => $offre_id,
             'montant' => $montant,
             'sedeplace' => $sedeplace,
@@ -121,7 +137,7 @@ class MyoffersController extends Controller
             'address' => $address,
         ]);
         $offre = DB::table('offres')->where('id', '=', $offre_id)->first();
-        $user = DB::table('users')->where('name', '=', $offre->username)->first();
+        $user = DB::table('users')->where('id', '=', $offre->user_id)->first();
         $offreapplication = DB::table('offreapplications')->where('id', '=', $offreApplicationId)->first();
 
         Mail::to($user->email)->send(new NewOffer($offreapplication, $offre));
@@ -131,7 +147,7 @@ class MyoffersController extends Controller
 
     public function create(Request $request)
     {
-        $username = $request->username;
+        $user_id = $request->user_id;
         $caryears = $request->car_years;
         $carmakes = $request->car_makes_txt;
         $carmodels = $request->car_models;
@@ -148,7 +164,7 @@ class MyoffersController extends Controller
         $sanitized = preg_replace('/['.$quoted.']/', '', $wanteddate);
 
         DB::table('offres')->insertGetId([
-            'username' => $username,
+            'user_id' => $user_id,
             'car' => $car,
             'city' => $city,
             'country' => $country,
@@ -168,17 +184,18 @@ class MyoffersController extends Controller
     */
     public function postPayWithStripe(Request $request, $product)
     {
-        $mecano = DB::table('users')->where('name', '=', $request->input('mecanoName'))->first();
+        $mecano = DB::table('users')->where('id', '=', $request->input('user_id'))->first();
         $comment = $request->input('comment');
         $rating = $request->input('rating');
+        $offreid = $request->input('offreid');
 
         $review = new Review;
 
         $review->storeReviewForProduct($mecano->id, $comment, $rating);
 
-        $offre = DB::table('offres')->where('id', '=', $request->input('offreid'))->update(['completed' => 1]);
         $product = DB::table('offreapplications')->where('id', '=', $product)->first();
-        return $this->chargeCustomer($product->id, $product->montant, $product->name, $request->input('stripeToken'), $mecano);
+
+        return $this->chargeCustomer($product->id, $product->montant, $mecano->name, $request->input('stripeToken'), $mecano, $offreid);
     }
  
    /**
@@ -191,7 +208,7 @@ class MyoffersController extends Controller
     * @param string $token
     * @return createStripeCharge()
     */
-    public function chargeCustomer($product_id, $product_price, $product_name, $token, $mecano)
+    public function chargeCustomer($product_id, $product_price, $product_name, $token, $mecano, $offreid)
     {
         \Stripe\Stripe::setApiKey('sk_test_oXWrbKryk4Up33w2LZTQ3gK6');
         
@@ -204,7 +221,7 @@ class MyoffersController extends Controller
             $customer = \Stripe\Customer::retrieve(Auth::user()->stripe_id);
         }
  
-        return $this->createStripeCharge($product_id, $product_price, $product_name, $customer, $mecano);
+        return $this->createStripeCharge($product_id, $product_price, $product_name, $customer, $mecano, $offreid);
     }
  
    /**
@@ -218,25 +235,37 @@ class MyoffersController extends Controller
     * @param Stripe\Customer $customer
     * @return postStoreOrder()
     */
-    public function createStripeCharge($product_id, $product_price, $product_name, $customer, $mecano)
+    public function createStripeCharge($product_id, $product_price, $product_name, $customer, $mecano, $offreid)
     {
         try {
             $product_price = preg_replace('|[^0-9]|i', '', number_format($product_price, 2));
-            $charge = \Stripe\Charge::create(array(
-                "amount" => $product_price,
-                "currency" => "CAD",
-                "customer" => $customer->id,
-                "destination" => $mecano->stripe_id,
-                "application_fee" => $product_price * 0.5,
-                "description" => $product_name
-            ));
+            if ($product_price > 50000) {
+                $charge = \Stripe\Charge::create(array(
+                    "amount" => $product_price,
+                    "currency" => "CAD",
+                    "customer" => $customer->id,
+                    "destination" => $mecano->stripe_id,
+                    "application_fee" => round((($product_price * 0.029) + 30) + (5000)),
+                    "description" => $product_name
+                ));
+            } else {
+                $charge = \Stripe\Charge::create(array(
+                    "amount" => $product_price,
+                    "currency" => "CAD",
+                    "customer" => $customer->id,
+                    "destination" => $mecano->stripe_id,
+                    "application_fee" => round((($product_price * 0.029) + 30) + ($product_price * 0.1)),
+                    "description" => $product_name
+                ));
+            }
+            
         } catch(\Stripe\Error\Card $e) {
             return redirect()
                 ->route('index')
                 ->with('error', 'Your credit card was been declined. Please try again or contact us.');
     }
  
-        return $this->postStoreOrder($product_name);
+        return $this->postStoreOrder($product_name, $offreid);
     }
  
    /**
@@ -277,13 +306,13 @@ class MyoffersController extends Controller
     * @param string $product_name
     * @return redirect()
     */
-    public function postStoreOrder($product_name)
+    public function postStoreOrder($product_name, $offreid)
     {
         Order::create([
             'email' => Auth::user()->email,
             'product' => $product_name
         ]);
- 
+        DB::table('offres')->where('id', '=', $offreid)->update(['completed' => 1]);
         return redirect('myoffers');
     }
 }

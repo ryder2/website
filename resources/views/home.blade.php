@@ -22,24 +22,24 @@
                                 @foreach($offreapplications as $offreapplication)
                                     @if ($offreapplication->offre_id == $offre->id)
                                         @if (!$offreapplication->accepted)
-                                            @if($offreapplication->name === Auth::user()->name)
+                                            @if($offreapplication->user_id == Auth::user()->id)
                                                 <?php $offerCanBeDeleted = true ?>
                                                 <?php $deletedoffer = $offreapplication ?>
                                             @endif
                                         @endif
                                         @if ($offreapplication->accepted)
-                                            @if($offreapplication->name === Auth::user()->name)
+                                            @if($offreapplication->user_id == Auth::user()->id)
                                                 <?php $offerAsBeenAcceptedForHim = true ?>
                                                 <?php $acceptedoffer = $offreapplication ?>
                                             @endif
                                         @endif 
                                         @if ($offreapplication->accepted)
-                                            @if($offreapplication->name != Auth::user()->name)
+                                            @if($offreapplication->user_id != Auth::user()->id)
                                                 <?php $offerAsBeenAcceptedNotForHim = true ?>
                                             @endif
                                         @endif
                                         @if(!$offreapplication->accepted)
-                                            @if($offreapplication->name != Auth::user()->name)
+                                            @if($offreapplication->user_id != Auth::user()->id)
                                                 <?php $offerCanBeApply = true ?>
                                             @endif
                                         @endif
@@ -73,6 +73,7 @@
 
                                                 <div id="offeracceptedDiv" style="display: none;" class="offeracceptedDiv">
                                                     <br>
+                                                    Date : {{ $offre->wanteddate }}<br>
                                                     Montant : {{ $acceptedoffer->montant }} $ <br>
                                                     Move : 
                                                     @if($acceptedoffer->sedeplace)
@@ -136,6 +137,15 @@
     });
     </script>
 @else
-    Good try buddy
+    @if (Auth::user()->mecano && !Auth::user()->approuved)
+        <div class="col-md-8 col-md-offset-2">
+            <div class="alert alert-warning"><b>Please, make sure to set up your bank account infos and a mechanic evidence to get approuved and see the offers</b></div>
+        </div>
+    @else
+        <div class="col-md-8 col-md-offset-2">
+            <div class="alert alert-warning"><b>You have to be a mechanic to see this section.</b></div>
+        </div>
+        
+    @endif
 @endif
 @endsection

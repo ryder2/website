@@ -18,14 +18,12 @@ class SeemecanoprofileController extends Controller{
         $this->middleware('auth');
     }
 
-    public function switchInfo($name){
-    	$mecano = DB::table('users')->where('name', '=', $name)->first();
-
-        $id = $mecano->id;
-        $product = User::find($id);
+    public function switchInfo($user_id){
+        
+        $product = User::find($user_id);
         // Get all reviews that are not spam for the product and paginate them
         $reviews = $product->reviews()->approved()->notSpam()->orderBy('created_at','desc')->paginate(100);
 
-       	return view('seemecanoprofile', ['mecano' => $mecano], ['reviews' => $reviews]);
+       	return view('seemecanoprofile', ['mecano' => $product], ['reviews' => $reviews]);
     }
 }

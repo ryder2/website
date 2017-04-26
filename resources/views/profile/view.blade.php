@@ -63,6 +63,9 @@
                 </div>
             @endif
         </div>
+        <div class="col-md-8 col-md-offset-2">
+              <button type="button" class="btn btn-primary" onclick="window.location='{{ url('/editprofile') }}'">Edit my profile</button><br><br>
+            </div>
         @if (Auth::user()->mecano == 1)
             @if(!Auth::user()->stripe_id)
               <!-- Bootstrap Stripe.js bank account form starts here -->
@@ -399,9 +402,7 @@
                   </div>
                 </div>
             @endif
-            <div class="col-md-8 col-md-offset-2">
-            	<button type="button" class="btn btn-primary" onclick="window.location='{{ url('/editprofile') }}'">Edit my profile</button>
-            </div>
+            
         @if(count($reviews))
         <div class="col-md-8 col-md-offset-2">
         <br>

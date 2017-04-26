@@ -57,7 +57,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-6">
-                                <input id="username" type="hidden" class="form-control" name="username" value="{{ Auth::user()->name }}">
+                                <input id="username" type="hidden" class="form-control" name="user_id" value="{{ Auth::user()->id }}">
                             </div>
                         </div>
                         <div class="form-group">

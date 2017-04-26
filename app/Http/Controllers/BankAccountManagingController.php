@@ -94,4 +94,54 @@ class BankAccountManagingController extends Controller
           return back()->with('warning',$e->getMessage());
       }
     }
+
+    public function modify(Request $request)
+    {
+      
+        if($request->file()){
+            if(count($request->file('idimg')))
+            {
+                $image = $request->file('idimg');
+                $filename  = time() . '.' . $image->getClientOriginalExtension();
+
+                $path = public_path('/storage/users/ids/' . $filename);
+     
+                Image::make($image->getRealPath())->resize(200, 100)->save($path);
+            }
+        }
+        $name = explode(" ", Auth::user()->name);
+
+        \Stripe\Stripe::setApiKey("sk_test_oXWrbKryk4Up33w2LZTQ3gK6");
+
+        $imgid = \Stripe\FileUpload::create(
+          array(
+            "purpose" => "identity_document",
+            "file" => fopen($path, 'r')
+          ),
+          array("stripe_account" =>Auth::user()->stripe_id)
+        );  
+
+        try {
+        $account = \Stripe\Account::retrieve(Auth::user()->stripe_id);
+        $account->email = Auth::user()->email;
+        $account->external_account = $request->stripeToken;
+        $account->legal_entity->verification->document = $imgid->id;
+        $account->legal_entity->dob->day = Auth::user()->dobday;
+        $account->legal_entity->dob->month = Auth::user()->dobmonth;
+        $account->legal_entity->dob->year = Auth::user()->dobyear;
+        $account->legal_entity->type = $request->account_holder_type;
+        $account->legal_entity->address->city = Auth::user()->ville;
+        $account->legal_entity->address->line1 = Auth::user()->rue;
+        $account->legal_entity->address->postal_code = Auth::user()->codepostal;
+        $account->legal_entity->address->state = Auth::user()->province;
+        $account->tos_acceptance->date = time();
+        $account->tos_acceptance->ip = $request->ip();
+        $account->save();
+        return redirect('myprofile');
+
+      } catch (\Stripe\Error\Base $e) {
+            // Code to do something with the $e exception object when an error occurs
+          return back()->with('warning',$e->getMessage());
+      }
+    }
 }
