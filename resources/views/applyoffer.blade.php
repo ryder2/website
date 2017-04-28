@@ -41,7 +41,7 @@
                     <div class="panel-heading">Appliquer sur l'offre : {{$offre->title}}</div>
 
                     <div class="panel-body">
-                        Description : {{$offre->message}} <br><br>
+                        <b>Description : </b>{{$offre->message}} <br><br>
                         <form class="form-horizontal" role="form" method="POST" action="{{ action('MyoffersController@applyonoffer') }}">
                         {{ csrf_field() }}
                             <div class="form-group">

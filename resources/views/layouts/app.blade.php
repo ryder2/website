@@ -84,7 +84,7 @@
                 @if (!Auth::user()->mecano)
                     <li><a href="{{ url('/myoffers') }}">My offers</a></li>
                 @endif
-                @if (Auth::user()->mecano && Auth::user()->approuved)
+                @if (Auth::user()->mecano)
                     <li><a href="{{ url('/home') }}">Offers</a></li>
                 @endif
                 <li><a href="{{ url('/myprofile') }}">My profile</a></li>

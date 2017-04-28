@@ -75,6 +75,19 @@
                                             </form>
                                         @else
                                         <form role="form" method="delete" action="{{ action('MyoffersController@deleteofferapplication') }}">
+                                                    <br>
+                                                    <h3><b>My offer details</b></h3>
+                                                    <b>Montant : </b>{{ $deletedoffer->montant }} $ <br>
+                                                    <b>Move : </b>
+                                                    @if($deletedoffer->sedeplace)
+                                                         Yes 
+                                                    @else
+                                                         No 
+                                                    @endif <br>
+                                                    @if($deletedoffer->address)
+                                                        <b>Address to do the work : </b>{{ $deletedoffer->address }}<br>
+                                                    @endif
+                                                    <b>Fournit parts : </b>@if($deletedoffer->fournitpiece) Yes @else No @endif<br>
                                                 {{ method_field('DELETE') }}
                                                 {{ csrf_field() }}
                                                 <div class="form-group">
@@ -91,15 +104,15 @@
 
                                                 <div id="offeracceptedDiv" style="display: none;" class="offeracceptedDiv">
                                                     <br>
-                                                    Montant : {{ $acceptedoffer->montant }} $ <br>
-                                                    Move : 
+                                                    <b>Montant : </b>{{ $acceptedoffer->montant }} $ <br>
+                                                    <b>Move : </b>
                                                     @if($acceptedoffer->sedeplace)
                                                          Yes 
                                                     @else
                                                          No 
                                                     @endif <br>
-                                                    Address to do the work : {{ $acceptedoffer->address }}<br>
-                                                    Fournit parts : @if($acceptedoffer->fournitpiece) Yes @else No @endif<br>
+                                                    <b>Address to do the work : </b>{{ $acceptedoffer->address }}<br>
+                                                    <b>Fournit parts : </b>@if($acceptedoffer->fournitpiece) Yes @else No @endif<br>
                                                     @if(!$acceptedoffer->completed)
                                                         <form role="form" method="POST" action="{{ url('/completedofferapplication') }}">
                                                             <div class="form-group">

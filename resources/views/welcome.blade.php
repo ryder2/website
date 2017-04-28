@@ -45,7 +45,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index.html">Road Mecs</a>
+          <a class="navbar-brand" href="{{ url('/') }}">Road Mecs</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -94,7 +94,6 @@
                     </ul>
                 </li>
             @endif
-            <li><a href="#">Français</a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
@@ -108,7 +107,7 @@
                 <h1>Welcome on <strong><span class="color">Road Mecs</span></strong></h1>
                 <p class="lead">Taking roadside assistance to <strong>another level</strong> with <strong>extraordinary people</strong></p>
                 </br></br>
-                <button type="getapp" class="btn tf-btn btn-default1" onclick="window.location.href='https://play.google.com/store/apps/'">Get our free app now!</button>
+                <button type="getapp" class="btn tf-btn btn-default1" onclick="window.location.href='https://laravel.dev/login'">Register or Login to get started</button>
                 </br>
                 <a href="#tf-about" class="fa fa-angle-down page-scroll"></a>
             </div>
@@ -284,7 +283,7 @@
                 <div class="col-sm-6 col-md-3 col-lg-3 tires">
                     <div class="portfolio-item">
                         <div class="hover-bg">
-                            <a href="javascript:loginpopup('show');">
+                            <a href="{{ url('/addoffer') }}">
                                 <div class="hover-text">
                                     <h4>Tire Change</h4>
                                     <small>Mounted Tires</small>
@@ -300,7 +299,7 @@
                 <div class="col-sm-6 col-md-3 col-lg-3 tires">
                     <div class="portfolio-item">
                         <div class="hover-bg">
-                            <a href="javascript:loginpopup('show');">
+                            <a href="{{ url('/addoffer') }}">
                                 <div class="hover-text">
                                     <h4>Tire Change</h4>
                                     <small>Unmounted Tires</small>
@@ -316,7 +315,7 @@
                 <div class="col-sm-6 col-md-3 col-lg-3 oilbrake">
                     <div class="portfolio-item">
                         <div class="hover-bg">
-                            <a href="javascript:loginpopup('show');">
+                            <a href="{{ url('/addoffer') }}">
                                 <div class="hover-text">
                                     <h4>Oil Change</h4>
                                     <small>Synthetic/Regular</small>
@@ -332,7 +331,7 @@
                 <div class="col-sm-6 col-md-3 col-lg-3 oilbrake">
                     <div class="portfolio-item">
                         <div class="hover-bg">
-                            <a href="javascript:loginpopup('show');">
+                            <a href="{{ url('/addoffer') }}">
                                 <div class="hover-text">
                                     <h4>Brake Check/Change</h4>
                                     <small>Discs/Drums</small>
@@ -348,7 +347,7 @@
                 <div class="col-sm-6 col-md-3 col-lg-3 battery">
                     <div class="portfolio-item">
                         <div class="hover-bg">
-                            <a href="javascript:loginpopup('show');">
+                            <a href="{{ url('/addoffer') }}">
                                 <div class="hover-text">
                                     <h4>Battery</h4>
                                     <small>Change/Test</small>
@@ -364,7 +363,7 @@
                 <div class="col-sm-6 col-md-3 col-lg-3 brakedown">
                     <div class="portfolio-item">
                         <div class="hover-bg">
-                            <a href="javascript:loginpopup('show');">
+                            <a href="{{ url('/addoffer') }}">
                                 <div class="hover-text">
                                     <h4>Towing</h4>
                                     <small>4x4/Regular</small>
@@ -380,7 +379,7 @@
                 <div class="col-sm-6 col-md-3 col-lg-3 brakedown battery">
                     <div class="portfolio-item">
                         <div class="hover-bg">
-                            <a href="javascript:loginpopup('show');">
+                            <a href="{{ url('/addoffer') }}">
                                 <div class="hover-text">
                                     <h4>Battery Boost</h4>
                                     <small>Jumper Cable/Battery Pack</small>
@@ -396,7 +395,7 @@
                 <div class="col-sm-6 col-md-3 col-lg-3 services">
                     <div class="portfolio-item">
                         <div class="hover-bg">
-                            <a href="javascript:loginpopup('show');">
+                            <a href="{{ url('/addoffer') }}">
                                 <div class="hover-text">
                                     <h4>Light Change</h4>
                                     <small>Brake/Headlight/Flasher/...</small>

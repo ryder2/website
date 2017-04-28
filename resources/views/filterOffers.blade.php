@@ -9,11 +9,18 @@
                         <div class="panel-heading">{{ $offre->title }} @if($offre->created_at > \Carbon\Carbon::now()->subDays(1))<i class="fa fa-exclamation pull-right" style="color:red;"></i>@endif</div>
 
                         <div class="panel-body">
-                            Car : {{ $offre->car }} <br>
-                            Message : {{ $offre->message }} <br>
-                            City : {{ $offre->city }} <br>
-                            Province : {{ $offre->province }} <br>
-                            Country : {{ $offre->country }} <br>
+                            <?php
+                                // Delimiters may be slash, dot, or hyphen
+                                $datehour = $offre->wanteddate;
+                                list($date, $hour) = explode('T', $datehour);
+                                $hour = substr($hour,0,2).':'.substr($hour,2,2);
+                                echo "<b>Date : </b>$date <br /> <b>Time : </b>$hour <br />\n";
+                            ?>
+                            <b>Car : </b>{{ $offre->car }} <br>
+                            <b>Message : </b>{{ $offre->message }} <br>
+                            <b>City : </b>{{ $offre->city }} <br>
+                            <b>Province : </b>{{ $offre->province }} <br>
+                            <b>Country : </b>{{ $offre->country }} <br>
                             @if($offreapplications->count())
                                 @foreach($offreapplications as $offreapplication)
                                     @if ($offreapplication->offre_id == $offre->id)
@@ -55,6 +62,20 @@
                                         <form role="form" method="delete" action="{{ action('MyoffersController@deleteofferapplication') }}">
                                                 {{ method_field('DELETE') }}
                                                 {{ csrf_field() }}
+                                                    <br>
+                                                    <h3><b>My offer details</b></h3>
+                                                    <b>Montant : </b>{{ $deletedoffer->montant }} $ <br>
+                                                    <b>Move : </b>
+                                                    @if($deletedoffer->sedeplace)
+                                                         Yes 
+                                                    @else
+                                                         No 
+                                                    @endif <br>
+                                                    @if($deletedoffer->address)
+                                                        <b>Address to do the work : </b>{{ $deletedoffer->address }}<br>
+                                                    @endif
+                                                    <b>Fournit parts : </b>@if($deletedoffer->fournitpiece) Yes @else No @endif<br>
+                                                    @if(!$acceptedoffer->completed)
                                                 <div class="form-group">
                                                     <input type="hidden" name="id" value="{{ $offre->id }}">
                                                 </div>
@@ -65,20 +86,19 @@
                                             </form>
                                         @endif
                                     @else
-                                        <br><button id="seeacceptedoffer" name="seeacceptedoffer" type="button" class="btn btn-success accepted">Your offer as been accepted! See details</button>
+                                        <br><button id="seeacceptedoffer" name="seeacceptedoffer" type="button" class="btn btn-primary accepted">Your offer as been accepted! See details</button>
 
                                                 <div id="offeracceptedDiv" style="display: none;" class="offeracceptedDiv">
                                                     <br>
-                                                    Date : {{ $offre->wanteddate }}<br>
-                                                    Montant : {{ $acceptedoffer->montant }} $ <br>
-                                                    Move : 
+                                                    <b>Montant : </b>{{ $acceptedoffer->montant }} $ <br>
+                                                    <b>Move : </b>
                                                     @if($acceptedoffer->sedeplace)
                                                          Yes 
                                                     @else
                                                          No 
                                                     @endif <br>
-                                                    Address to do the work : {{ $acceptedoffer->address }}<br>
-                                                    Fournit parts : @if($acceptedoffer->fournitpiece) Yes @else No @endif<br>
+                                                    <b>Address to do the work : </b>{{ $acceptedoffer->address }}<br>
+                                                    <b>Fournit parts : </b>@if($acceptedoffer->fournitpiece) Yes @else No @endif<br>
                                                     @if(!$acceptedoffer->completed)
                                                         <form role="form" method="POST" action="{{ url('/completedofferapplication') }}">
                                                             <div class="form-group">

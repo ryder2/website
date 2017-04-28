@@ -109,6 +109,6 @@
     });
 </script>
 @else
-    You can't acces this section
+    <center><b>You can't acces this section as a mechanic</b></center>
 @endif
 @endsection

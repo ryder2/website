@@ -42,7 +42,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Montant : {{ number_format($offreapplication->montant, 2, '.', '') }} $</div>
                     <div class="panel-body">
-                        Mechanic : <a href="{!! route('seemecanoprofil', ['name'=>$offreapplication->user_id]) !!}" class="btn btn-default">{{ App\User::find($offreapplication->user_id)->name }}</a><br>
+                        Mechanic : <a href="{!! route('seemecanoprofil', ['name'=>$offreapplication->user_id]) !!}" class="btn-link">{{ App\User::find($offreapplication->user_id)->name }}</a><br>
                         Move : 
                         @if($offreapplication->sedeplace)
                              Yes 

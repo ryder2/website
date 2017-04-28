@@ -65,7 +65,7 @@
 
                                 <div id="offeracceptedDiv" style="display: none;" class="offeracceptedDiv">
                                     <br>
-                                    <b>Mechanic Name : </b><a href="{!! route('seemecanoprofil', ['name'=>$offreapplication->user_id]) !!}" class="btn btn-default">{{ App\User::find($offreapplication->user_id)->name }}</a><br>
+                                    <b>Mechanic Name : </b><a href="{!! route('seemecanoprofil', ['name'=>$offreapplication->user_id]) !!}" class="btn-link">{{ App\User::find($offreapplication->user_id)->name }}</a><br>
                                     <b>Montant : </b>{{ number_format($acceptedofferapplication->montant, 2) }} $ <br>
                                     <b>Move : </b>
                                     @if($acceptedofferapplication->sedeplace)
@@ -151,6 +151,6 @@
     });
 </script>
 @else
-    You can't acces this section
+    <center><b>You can't acces this section as a mechanic</b></center>
 @endif
 @endsection

@@ -294,11 +294,11 @@
                             <p class="submit-note">
                               <center>
                                 <b>
-                                  By registering your account, you agree to our <a target="_blank" href="{{ url('/termsandconditions') }}">Services Agreement</a> and the <a target="_blank" href="https://stripe.com/connect-account/legal">Stripe Connected Account Agreement</a>.
+                                  By registering your account, you agree to our <a target="_blank" class="btn-link" href="{{ url('/termsandconditions') }}">Services Agreement</a> and the <a target="_blank" class="btn-link" href="https://stripe.com/connect-account/legal">Stripe Connected Account Agreement.</a>
                                 </b>
                               </center>
                             </p>
-                            <button class="btn btn-block btn-success submit" type="submit">Add bank account</button>
+                            <button class="btn btn-block btn-primary submit" type="submit">Add bank account</button>
                           </div>
                         </div>
                       </form>
