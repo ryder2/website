@@ -31,11 +31,32 @@
                                 <select class="form-control" name="dobyear" id="dobyear" required></select>
                             </div>
                         </div>
-                        <div class="form-group{{ $errors->has('rue') ? ' has-error' : '' }}">
-                            <label for="rue" class="col-md-4 control-label">Street</label>
+
+                        <div id="locationField" class="form-group">
+                            <label for="autocomplete" class="col-md-4 control-label">Address</label>
+                            <div class="col-md-6">
+                                <input id="autocomplete" name="autocomplete" class="form-control" placeholder="Enter your address"
+                                 onFocus="geolocate()" type="text"></input>
+                            </div>
+                        </div>
+                        <div class="form-group{{ $errors->has('street_number') ? ' has-error' : '' }}">
+                            <label for="street_number" class="col-md-4 control-label">Street Number</label>
 
                             <div class="col-md-6">
-                                <input id="rue" type="text" class="form-control" name="rue" value="{{ old('rue') }}" required>
+                                <input id="street_number" type="text" class="form-control" name="street_number" value="{{ old('street_number') }}" readonly required>
+
+                                @if ($errors->has('street_number'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('street_number') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group{{ $errors->has('rue') ? ' has-error' : '' }}">
+                            <label for="rue" class="col-md-4 control-label">Street Name</label>
+
+                            <div class="col-md-6">
+                                <input id="route" type="text" class="form-control" name="rue" value="{{ old('rue') }}" readonly required>
 
                                 @if ($errors->has('rue'))
                                     <span class="help-block">
@@ -48,7 +69,7 @@
                             <label for="codepostal" class="col-md-4 control-label">Postal Code</label>
 
                             <div class="col-md-6">
-                                <input id="codepostal" type="text" class="form-control" name="codepostal" value="{{ old('codepostal') }}" required>
+                                <input id="postal_code" type="text" class="form-control" name="codepostal" value="{{ old('codepostal') }}" readonly required>
 
                                 @if ($errors->has('codepostal'))
                                     <span class="help-block">
@@ -61,7 +82,7 @@
                             <label for="ville" class="col-md-4 control-label">City</label>
 
                             <div class="col-md-6">
-                                <input id="ville" type="text" class="form-control" name="ville" value="{{ old('ville') }}" required>
+                                <input id="locality" type="text" class="form-control" name="ville" value="{{ old('ville') }}" readonly required>
 
                                 @if ($errors->has('ville'))
                                     <span class="help-block">
@@ -74,7 +95,7 @@
                             <label for="province" class="col-md-4 control-label">Province</label>
 
                             <div class="col-md-6">
-                                <input id="province" type="text" class="form-control" name="province" value="{{ old('province') }}" required>
+                                <input id="administrative_area_level_1" type="text" class="form-control" name="province" value="{{ old('province') }}" readonly required>
 
                                 @if ($errors->has('province'))
                                     <span class="help-block">
@@ -87,7 +108,7 @@
                             <label for="pays" class="col-md-4 control-label">Country</label>
 
                             <div class="col-md-6">
-                                <input id="pays" type="text" class="form-control" name="pays" value="{{ old('pays') }}" required>
+                                <input id="country" type="text" class="form-control" name="pays" value="{{ old('pays') }}" readonly required>
 
                                 @if ($errors->has('pays'))
                                     <span class="help-block">
@@ -192,4 +213,73 @@
     });
 </script>
 
+    <script>
+      // This example displays an address form, using the autocomplete feature
+      // of the Google Places API to help users fill in the information.
+
+      // This example requires the Places library. Include the libraries=places
+      // parameter when you first load the API. For example:
+      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
+      var placeSearch, autocomplete;
+      var componentForm = {
+        street_number: 'short_name',
+        route: 'long_name',
+        locality: 'long_name',
+        administrative_area_level_1: 'short_name',
+        country: 'long_name',
+        postal_code: 'short_name'
+      };
+
+      function initAutocomplete() {
+        // Create the autocomplete object, restricting the search to geographical
+        // location types.
+        autocomplete = new google.maps.places.Autocomplete(
+            /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
+            {types: ['geocode']});
+
+        // When the user selects an address from the dropdown, populate the address
+        // fields in the form.
+        autocomplete.addListener('place_changed', fillInAddress);
+      }
+
+      function fillInAddress() {
+        // Get the place details from the autocomplete object.
+        var place = autocomplete.getPlace();
+
+        for (var component in componentForm) {
+          document.getElementById(component).value = '';
+        }
+
+        // Get each component of the address from the place details
+        // and fill the corresponding field on the form.
+        for (var i = 0; i < place.address_components.length; i++) {
+          var addressType = place.address_components[i].types[0];
+          if (componentForm[addressType]) {
+            var val = place.address_components[i][componentForm[addressType]];
+            document.getElementById(addressType).value = val;
+          }
+        }
+      }
+
+      // Bias the autocomplete object to the user's geographical location,
+      // as supplied by the browser's 'navigator.geolocation' object.
+      function geolocate() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var geolocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            var circle = new google.maps.Circle({
+              center: geolocation,
+              radius: position.coords.accuracy
+            });
+            autocomplete.setBounds(circle.getBounds());
+          });
+        }
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcvRHv5pRhvL-3AiVlNKxTSHY0nMZwzzQ&libraries=places&callback=initAutocomplete&language=en&region=US"
+        async defer></script>
 @endsection

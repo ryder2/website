@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
             <div class="large-6 columns">
-            <input type="text" id="search-input" onkeyup="searchup()" onkeydown="searchdown()" placeholder="Search By Name"><br><br>
+            <input type="text" id="search-input" class="form-control" onkeyup="searchup()" onkeydown="searchdown()" placeholder="Search By Name"><br>
             <meta name="csrf-token" content="{{ csrf_token() }}"></div>
             <div id="search-results">
                 <script>

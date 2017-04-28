@@ -18,9 +18,16 @@
 
                         </div>
                         <div class="panel-body">
-                            Car : {{ $offre->car }} <br>
-                            Message : {{ $offre->message }} <br>
-                            Offers count : 
+                            <?php
+                                // Delimiters may be slash, dot, or hyphen
+                                $datehour = $offre->wanteddate;
+                                list($date, $hour) = explode('T', $datehour);
+                                $hour = substr($hour,0,2).':'.substr($hour,2,2);
+                                echo "<b>Date : </b>$date <br /> <b>Time : </b>$hour <br />\n";
+                            ?>
+                            <b>Car : </b>{{ $offre->car }} <br>
+                            <b>Message : </b>{{ $offre->message }} <br>
+                            <b>Offers count : </b>
                                 <?php $pos=0 ?>
                                 <?php $acceptedofferapplication=null ?>
                                 @foreach($offreapplications as $offreapplication)
@@ -57,17 +64,17 @@
                                 @endif
 
                                 <div id="offeracceptedDiv" style="display: none;" class="offeracceptedDiv">
-                                    <br>Date : {{ $offre->wanteddate }}<br>
-                                    Mechanic Name : <a href="{!! route('seemecanoprofil', ['name'=>$offreapplication->user_id]) !!}" class="btn btn-default">{{ App\User::find($offreapplication->user_id)->name }}</a><br>
-                                    Montant : {{ number_format($acceptedofferapplication->montant, 2) }} $ <br>
-                                    Move : 
+                                    <br>
+                                    <b>Mechanic Name : </b><a href="{!! route('seemecanoprofil', ['name'=>$offreapplication->user_id]) !!}" class="btn btn-default">{{ App\User::find($offreapplication->user_id)->name }}</a><br>
+                                    <b>Montant : </b>{{ number_format($acceptedofferapplication->montant, 2) }} $ <br>
+                                    <b>Move : </b>
                                     @if($acceptedofferapplication->sedeplace)
                                          Yes 
                                     @else
                                          No
                                     @endif <br>
-                                    Address : {{ $acceptedofferapplication->address }} <br>
-                                    Fournit parts : 
+                                    <b>Address : </b>{{ $acceptedofferapplication->address }} <br>
+                                    <b>Fournit parts : </b>
                                     @if($acceptedofferapplication->fournitpiece)
                                          Yes 
                                     @else

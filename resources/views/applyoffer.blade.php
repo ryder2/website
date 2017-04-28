@@ -54,7 +54,10 @@
                             <div class="form-group">
                                 <label for="transactionfees" class="col-md-1 control-label">Fees</label>
                                 <div class="col-md-6">
-                                  <label id="transactionfees" type="label" class="form-control" name="transactionfees"> </label>
+                                  <label id="transactionfees" type="label" class="form-control" name="transactionfees" data-html="true" data-placement="top" data-toggle="tooltip" title="<ul id='fees'>
+                                <li>Stripe Fees : </li>
+                                <li>RoadMecs Fees : </li>
+                              </ul>"> </label>
                                   <input id="transactionfeesbox" type="hidden" class="form-control" name="transactionfeesbox">
                                 </div>
                             </div>
@@ -227,6 +230,18 @@
                               'Error: Your browser doesn\'t support geolocation.');
       }
 
+    </script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();   
+      });
+      $('#transactionfees').on('shown.bs.tooltip', function () {
+        if(($('#montant').val()) > 500) {
+          $('#fees').html('<li>Stripe Fees : ' + (0.30 + ($('#montant').val() * 0.029)).toFixed(2) + '$' + '</li>' + '<li>RoadMecs Fees : ' + (50).toFixed(2) + '$' + '</li>');
+          } else {
+            $('#fees').html('<li>Stripe Fees : ' + (0.30 + ($('#montant').val() * 0.029)).toFixed(2) + '$' + '</li>' + '<li>RoadMecs Fees : ' +  ($('#montant').val() * 0.1).toFixed(2) + '$' + '</li>');
+          }
+      })
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcvRHv5pRhvL-3AiVlNKxTSHY0nMZwzzQ&libraries=places&callback=initAutocomplete"
          async defer></script>

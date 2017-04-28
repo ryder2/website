@@ -24,6 +24,22 @@ class MyoffersController extends Controller
         $this->middleware('auth');
     }
 
+    public function search(Request $keyword)
+    {
+            if($keyword->keywords == 'Country') {
+                $offreapplications = DB::table('offreapplications')->get();
+                $offres = DB::table('offres')->where([['country', '=', Auth::user()->pays], ['completed', '=', 0]])->orderBy('created_at','desc')->get();
+            } else if($keyword->keywords == 'Province') {
+                $offreapplications = DB::table('offreapplications')->get();
+                $offres = DB::table('offres')->where([['province', '=', Auth::user()->province], ['completed', '=', 0]])->orderBy('created_at','desc')->get();
+            } else if($keyword->keywords == 'City') {
+                $offreapplications = DB::table('offreapplications')->get();
+                $offres = DB::table('offres')->where([['city', '=', Auth::user()->ville], ['completed', '=', 0]])->orderBy('created_at','desc')->get();
+            }
+        
+        return view('filterOffers', ['offres' => $offres, 'offreapplications' => $offreapplications]);
+    }
+
     /**
      * Show the application dashboard.
      *
@@ -153,6 +169,7 @@ class MyoffersController extends Controller
         $carmodels = $request->car_models;
         $carmodeltrims = $request->car_model_trims_txt;
         $city = $request->city;
+        $province = $request->province;
         $country = $request->country;
         $title = $request->title;
         $message = $request->message;
@@ -167,6 +184,7 @@ class MyoffersController extends Controller
             'user_id' => $user_id,
             'car' => $car,
             'city' => $city,
+            'province' => $province,
             'country' => $country,
             'title' => $title,
             'message' => $message,

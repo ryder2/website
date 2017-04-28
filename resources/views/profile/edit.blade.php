@@ -9,7 +9,7 @@
                     {{ session('warning') }}
                 </div>
             @endif
-            <form class="form-horizontal" role="form" method="POST" enctype="multipart/form-data" action="{{ url('/saveprofile') }}">
+            <form id="myForm" name="myForm" class="form-horizontal" role="form" method="POST" enctype="multipart/form-data" action="{{ url('/saveprofile') }}">
                 <div class="panel panel-default">
                     <div class="panel-heading">Informations</div>
 
@@ -39,8 +39,21 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="form-group{{ $errors->has('street_number') ? ' has-error' : '' }}">
+                            <label for="rue" class="col-md-4 control-label">Street Number</label>
+
+                            <div class="col-md-6">
+                                <input id="street_number" type="text" class="form-control" name="street_number" value="{{ Auth::user()->street_number }}" required>
+
+                                @if ($errors->has('rue'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('rue') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
                         <div class="form-group{{ $errors->has('rue') ? ' has-error' : '' }}">
-                            <label for="rue" class="col-md-4 control-label">Street</label>
+                            <label for="rue" class="col-md-4 control-label">Street Name</label>
 
                             <div class="col-md-6">
                                 <input id="rue" type="text" class="form-control" name="rue" value="{{ Auth::user()->rue }}" required>
@@ -138,8 +151,8 @@
                         {{ csrf_field() }}
 
                         <div class="form-group">
-                            <div class="col-md-6">
-                                <input id="apropos" type="text" class="form-control" name="apropos" value="{{ Auth::user()->apropos }}" autofocus>
+                            <div class="col-md-12" textwrapper>
+                                <textarea id="apropos" class="form-control" rows="10" cols="10" name="apropos" form="myForm">{{ Auth::user()->apropos }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -152,8 +165,8 @@
                                 {{ csrf_field() }}
 
                             <div class="form-group">
-                                <div class="col-md-6">
-                                    <input id="experience" type="text" class="form-control" name="experience" value="{{ Auth::user()->experience }}">
+                                <div class="col-md-12" textwrapper>
+                                    <textarea id="experience" class="form-control" rows="10" cols="10" name="experience" form="myForm">{{ Auth::user()->experience }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -387,6 +400,13 @@
                                 </div>
                         <div class="row">
                           <div class="col-md-12">
+                            <p class="submit-note">
+                              <center>
+                                <b>
+                                  By registering your account, you agree to our <a target="_blank" href="{{ url('/termsandconditions') }}">Services Agreement</a> and the <a target="_blank" href="https://stripe.com/connect-account/legal">Stripe Connected Account Agreement</a>.
+                                </b>
+                              </center>
+                            </p>
                             <button class="btn btn-block btn-success submit" type="submit">Modify bank account</button>
                           </div>
                         </div>

@@ -26,7 +26,7 @@ class AdminpanelController extends Controller
     public function index()
     {
         if(Auth::user()->role_id == 1) {
-            $users = DB::table('users')->get();
+            $users = DB::table('users')->orderBy('created_at','desc')->get();
             return view('adminpanel', ['users' => $users]);
         }
         return view('myprofile');
@@ -35,9 +35,9 @@ class AdminpanelController extends Controller
     public function search(Request $keyword)
     {
         if (strlen($keyword->keywords) > 0) {
-            $searchUsers = DB::table('users')->where("name", "like", '%' . $keyword->keywords . '%')->get();
+            $searchUsers = DB::table('users')->where("name", "like", '%' . $keyword->keywords . '%')->orderBy('created_at','desc')->get();
         } else {
-            $searchUsers = DB::table('users')->get();
+            $searchUsers = DB::table('users')->orderBy('created_at','desc')->get();
         }
         
         return view('searchUsers', ['searchUsers' => $searchUsers]);

@@ -67,6 +67,11 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-6">
+                                <input id="province" type="hidden" class="form-control" name="province" value="{{ Auth::user()->province }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-6">
                                 <input id="country" type="hidden" class="form-control" name="country" value="{{ Auth::user()->pays }}">
                             </div>
                         </div>

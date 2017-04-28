@@ -16,7 +16,7 @@
                 <center><img id="profileimage" src="{{ Auth::user()->avatar ? Auth::user()->avatar : 'storage/users/profile/default.png'}}" width="150 " height="200"> <br><br>
                     Name : {{ Auth::user()->name }} <br>
                     Email : {{ Auth::user()->email }} <br>
-                    Address : {{ Auth::user()->rue }}, {{ Auth::user()->codepostal }}, {{ Auth::user()->ville }}, {{ Auth::user()->province }}, {{ Auth::user()->pays }} <br>
+                    Address : {{ Auth::user()->street_number }}, {{ Auth::user()->rue }}, {{ Auth::user()->codepostal }}, {{ Auth::user()->ville }}, {{ Auth::user()->province }}, {{ Auth::user()->pays }} <br>
                     Mechanic : 
 
                     @if (Auth::user()->mecano == 1)
@@ -50,7 +50,7 @@
                 <div class="panel-heading">About me</div>
 
                 <div class="panel-body">
-                    {{ Auth::user()->apropos }}
+                    <?php echo(nl2br(Auth::user()->apropos)) ?>
                 </div>
             </div>
             @if (Auth::user()->mecano == 1)
@@ -58,7 +58,7 @@
                     <div class="panel-heading">Experience</div>
 
                     <div class="panel-body">
-                        {{ Auth::user()->experience }}
+                        <?php echo(nl2br(Auth::user()->experience)) ?>
                     </div>
                 </div>
             @endif
@@ -291,6 +291,13 @@
                                 </div>
                         <div class="row">
                           <div class="col-md-12">
+                            <p class="submit-note">
+                              <center>
+                                <b>
+                                  By registering your account, you agree to our <a target="_blank" href="{{ url('/termsandconditions') }}">Services Agreement</a> and the <a target="_blank" href="https://stripe.com/connect-account/legal">Stripe Connected Account Agreement</a>.
+                                </b>
+                              </center>
+                            </p>
                             <button class="btn btn-block btn-success submit" type="submit">Add bank account</button>
                           </div>
                         </div>
@@ -419,6 +426,7 @@
                         <p>{{{$review->comment}}}</p>
                     @endforeach
                 </div>
+                <center>{{ $reviews->links() }}</center>
             </div>
         </div>
         @endif

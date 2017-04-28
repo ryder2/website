@@ -61,7 +61,8 @@ class BankAccountManagingController extends Controller
                                 "type" => $request->account_holder_type,
                                 "address" => array(
                                             "city" => Auth::user()->ville,
-                                            "line1" => Auth::user()->rue,
+                                            "line1" => Auth::user()->street_number,
+                                            "line2" => Auth::user()->rue,
                                             "postal_code" => Auth::user()->codepostal,
                                             "state" => Auth::user()->province
                                             )

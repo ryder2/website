@@ -35,7 +35,7 @@
                 <div class="panel-heading">About me</div>
 
                 <div class="panel-body">
-                    {{ $mecano->apropos }}
+                    <?php echo(nl2br($mecano->apropos)) ?>
                 </div>
             </div>
             @if ($mecano->mecano == 1)
@@ -43,7 +43,7 @@
                     <div class="panel-heading">Experience</div>
 
                     <div class="panel-body">
-                        {{ $mecano->experience }}
+                        <?php echo(nl2br($mecano->experience)) ?>
                     </div>
                 </div>
             @endif
@@ -64,6 +64,7 @@
                         <p>{{{$review->comment}}}</p>
                     @endforeach
                 </div>
+                <center>{{ $reviews->links() }}</center>
             </div>
         </div>
         @endif

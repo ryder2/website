@@ -22,7 +22,7 @@ class SeemecanoprofileController extends Controller{
         
         $product = User::find($user_id);
         // Get all reviews that are not spam for the product and paginate them
-        $reviews = $product->reviews()->approved()->notSpam()->orderBy('created_at','desc')->paginate(100);
+        $reviews = $product->reviews()->approved()->notSpam()->orderBy('created_at','desc')->paginate(10);
 
        	return view('seemecanoprofile', ['mecano' => $product], ['reviews' => $reviews]);
     }

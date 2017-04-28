@@ -33,7 +33,7 @@ class MyprofileController extends Controller
         $id = Auth::user()->id;
         $product = User::find($id);
         // Get all reviews that are not spam for the product and paginate them
-        $reviews = $product->reviews()->approved()->notSpam()->orderBy('created_at','desc')->paginate(100);
+        $reviews = $product->reviews()->approved()->notSpam()->orderBy('created_at','desc')->paginate(10);
 
         if(substr( Auth::user()->stripe_id, 0, 4 ) === "acct") {
             \Stripe\Stripe::setApiKey("sk_test_oXWrbKryk4Up33w2LZTQ3gK6");
@@ -93,6 +93,7 @@ class MyprofileController extends Controller
 
         $user->name = $request->input('name');
         $user->email = $request->input('email');
+        $user->street_number = $request->input('street_number');
         $user->rue = $request->input('rue');
         $user->codepostal = $request->input('codepostal');
         $user->ville = $request->input('ville');

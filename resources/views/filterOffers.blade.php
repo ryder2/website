@@ -1,19 +1,4 @@
-@extends('layouts.app')
-@section('content')
-@if (Auth::user()->mecano && Auth::user()->approuved)
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-            <div class="large-6 columns">
-            <label for="filter">Filter by</label>
-            <select id="filter" class="form-control">
-                <option value="City">City</option>
-                <option value="Province">Province</option>
-                <option value="Country">Country</option>
-            </select><br>
-            <meta name="csrf-token" content="{{ csrf_token() }}"></div>
-            <div id="search-results">
-                @if(count($offres))
+@if(count($offres))
                 @foreach($offres as $offre)
                 @if(!$offre->completed)
                     <?php $offerCanBeDeleted = false ?>
@@ -24,18 +9,11 @@
                         <div class="panel-heading">{{ $offre->title }} @if($offre->created_at > \Carbon\Carbon::now()->subDays(1))<i class="fa fa-exclamation pull-right" style="color:red;"></i>@endif</div>
 
                         <div class="panel-body">
-                            <?php
-                                // Delimiters may be slash, dot, or hyphen
-                                $datehour = $offre->wanteddate;
-                                list($date, $hour) = explode('T', $datehour);
-                                $hour = substr($hour,0,2).':'.substr($hour,2,2);
-                                echo "<b>Date : </b>$date <br /> <b>Time : </b>$hour <br />\n";
-                            ?>
-                            <b>Car : </b>{{ $offre->car }} <br>
-                            <b>Message : </b>{{ $offre->message }} <br>
-                            <b>City : </b>{{ $offre->city }} <br>
-                            <b>Province : </b>{{ $offre->province }} <br>
-                            <b>Country : </b>{{ $offre->country }} <br>
+                            Car : {{ $offre->car }} <br>
+                            Message : {{ $offre->message }} <br>
+                            City : {{ $offre->city }} <br>
+                            Province : {{ $offre->province }} <br>
+                            Country : {{ $offre->country }} <br>
                             @if($offreapplications->count())
                                 @foreach($offreapplications as $offreapplication)
                                     @if ($offreapplication->offre_id == $offre->id)
@@ -91,6 +69,7 @@
 
                                                 <div id="offeracceptedDiv" style="display: none;" class="offeracceptedDiv">
                                                     <br>
+                                                    Date : {{ $offre->wanteddate }}<br>
                                                     Montant : {{ $acceptedoffer->montant }} $ <br>
                                                     Move : 
                                                     @if($acceptedoffer->sedeplace)
@@ -136,54 +115,3 @@
             </div>
         </div>
     </div>
-    </div>
-    <script>
-    $(document).ready(function(){
-
-      $(".accepted").click(function(e){
-        e.preventDefault();
-        var acceptedIndex = $('.accepted').index(this);
-        $('.offeracceptedDiv').each(function(index, elm) {
-            if(acceptedIndex == index) {
-                if ($(elm).is(':visible'))
-                    $(elm).fadeOut('slow');
-                else 
-                    $(elm).fadeIn('slow');
-            }
-        });
-      });
-    });
-    </script>
-    <script type="text/javascript">
-        $('#filter').on('change', function() {
-            searchup(this.value);
-        })
-        var timer;
-        function searchup(keywords) {
-
-         timer = setTimeout(function()
-         {
-                var data = {
-                    'keywords': keywords,
-                    '_token': $('meta[name="csrf-token"]').attr('content')
-                };
-                $.post('/executeFilter', data, function(markup)
-                {
-                    $('#search-results').html(markup);
-                });
-         }, 100);
-        }
-    </script>
-@else
-    @if (Auth::user()->mecano && !Auth::user()->approuved)
-        <div class="col-md-8 col-md-offset-2">
-            <div class="alert alert-warning"><b>Please, make sure to set up your bank account infos and a mechanic evidence to get approuved and see the offers</b></div>
-        </div>
-    @else
-        <div class="col-md-8 col-md-offset-2">
-            <div class="alert alert-warning"><b>You have to be a mechanic to see this section.</b></div>
-        </div>
-        
-    @endif
-@endif
-@endsection
