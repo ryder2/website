@@ -31,8 +31,8 @@
     <link rel="stylesheet" type="text/css" href="css/responsive.css">
 
     <script type="text/javascript" src="js/modernizr.custom.js"></script>
-  </head>
-  <body>
+</head>
+<body>
     <!-- Navigation
     ==========================================-->
     <nav id="tf-menu" class="navbar navbar-inverse navbar-fixed-top">
@@ -44,60 +44,60 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="{{ url('/') }}">Road Mecs</a>
-        </div>
+        </button>
+        <a class="navbar-brand" href="{{ url('/') }}">Road Mecs</a>
+    </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#tf-home" class="page-scroll">Home</a></li>
-            <li><a href="#tf-about" class="page-scroll">About Us</a></li>
-            <li><a href="#tf-services" class="page-scroll">Services</a></li>
-            <li><a href="#tf-clients" class="page-scroll">Affiliates</a></li>
-            <li><a href="#tf-works" class="page-scroll">Book Online</a></li>
-            <li><a href="#tf-contact" class="page-scroll">Contact Us</a></li>
-            @if (Auth::guest())
-                <li><a href="{{ route('login') }}">Login</a></li>
-                <li><a href="{{ route('register') }}">Register</a></li>
-            @else
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                        {{ Auth::user()->name }} <span class="caret"></span>
-                    </a>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#tf-home" class="page-scroll">Home</a></li>
+        <li><a href="#tf-about" class="page-scroll">About Us</a></li>
+        <li><a href="#tf-services" class="page-scroll">Services</a></li>
+        <li><a href="#tf-clients" class="page-scroll">Affiliates</a></li>
+        <li><a href="#tf-works" class="page-scroll">Book Online</a></li>
+        <li><a href="#tf-contact" class="page-scroll">Contact Us</a></li>
+        @if (Auth::guest())
+        <li><a href="{{ route('login') }}">Login</a></li>
+        <li><a href="{{ route('register') }}">Register</a></li>
+        @else
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                {{ Auth::user()->name }} <span class="caret"></span>
+            </a>
 
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            @if(Auth::user()->approuved && Auth::user()->mecano)
-                                <a href="{{ url('/home') }}">
-                            @endif
-                            @if(!Auth::user()->approuved && Auth::user()->mecano)
-                                <a href="{{ url('/myprofile') }}">
+            <ul class="dropdown-menu" role="menu">
+                <li>
+                    @if(Auth::user()->approuved && Auth::user()->mecano)
+                    <a href="{{ url('/home') }}">
+                        @endif
+                        @if(!Auth::user()->approuved && Auth::user()->mecano)
+                        <a href="{{ url('/myprofile') }}">
                             @endif
                             @if(!Auth::user()->mecano)
-                                <a href="{{ url('/myoffers') }}">
-                            @endif
+                            <a href="{{ url('/myoffers') }}">
+                                @endif
                                 Dashboard
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('logout') }}"
-                                onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();">
-                                Logout
-                            </a>
+                            onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">
+                            Logout
+                        </a>
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                {{ csrf_field() }}
-                            </form>
-                        </li>
-                    </ul>
-                </li>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                        </form>
+                    </li>
+                </ul>
+            </li>
             @endif
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
-    </nav>
+        </ul>
+    </div><!-- /.navbar-collapse -->
+</div><!-- /.container-fluid -->
+</nav>
 
     <!-- Home Page
     ==========================================-->
@@ -106,13 +106,13 @@
             <div class="content">
                 <h1>Welcome on <strong><span class="color">Road Mecs</span></strong></h1>
                 <p class="lead">Taking roadside assistance to <strong>another level</strong> with <strong>extraordinary people</strong></p>
-                </br></br>
-                <button type="getapp" class="btn tf-btn btn-default1" onclick="window.location.href='https://laravel.dev/login'">Register or Login to get started</button>
-                </br>
-                <a href="#tf-about" class="fa fa-angle-down page-scroll"></a>
-            </div>
-        </div>
+            </br></br>
+            <button type="getapp" class="btn tf-btn btn-default1" onclick="window.location.href='https://laravel.dev/login'">Register or Login to get started</button>
+        </br>
+        <a href="#tf-about" class="fa fa-angle-down page-scroll"></a>
     </div>
+</div>
+</div>
 
     <!-- About Us Page
     ==========================================-->
@@ -131,26 +131,26 @@
                             <div class="clearfix"></div>
                         </div>
                         <p class="intro">Contacting us when needing assistance will grant you knowledge to make your next move. While in need of a particular part, technician, shop or repair, contacting RoadMecs will permit you to find a low cost and quick solution for your car issues. </br></br>
-                                            Cars are a convenient, necessary or work tool for those in need of a quick or absolute way of transport. Here at RoadMecs with understand the market and availability hours of shops. While the demand is increasing, RoadMecs will find quick solutions and lowest costs for your car problems to be solved.</p>
-                        <ul class="about-list">
-                            <li>
-                                <span class="fa fa-dot-circle-o"></span>
-                                <strong>Mission</strong> - <em>We deliver uniqueness and quality</em>
-                            </li>
-                            <li>
-                                <span class="fa fa-dot-circle-o"></span>
-                                <strong>Skills</strong> - <em>Delivering fast and excellent results</em>
-                            </li>
-                            <li>
-                                <span class="fa fa-dot-circle-o"></span>
-                                <strong>Clients</strong> - <em>Satisfied clients thanks to our experience</em>
-                            </li>
-                        </ul>
+                            Cars are a convenient, necessary or work tool for those in need of a quick or absolute way of transport. Here at RoadMecs with understand the market and availability hours of shops. While the demand is increasing, RoadMecs will find quick solutions and lowest costs for your car problems to be solved.</p>
+                            <ul class="about-list">
+                                <li>
+                                    <span class="fa fa-dot-circle-o"></span>
+                                    <strong>Mission</strong> - <em>We deliver uniqueness and quality</em>
+                                </li>
+                                <li>
+                                    <span class="fa fa-dot-circle-o"></span>
+                                    <strong>Skills</strong> - <em>Delivering fast and excellent results</em>
+                                </li>
+                                <li>
+                                    <span class="fa fa-dot-circle-o"></span>
+                                    <strong>Clients</strong> - <em>Satisfied clients thanks to our experience</em>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
     <!-- Services Section
     ==========================================-->
@@ -190,7 +190,7 @@
                     <p>Many car issues can be fixed where the problem occurred. While in a place permitted by law, a certified technician can reach you location and repair the issue on the spot.</p>
                 </div>
             </div>
-             <div class="row">
+            <div class="row">
                 <div class="col-md-3 col-sm-6 service">
                     <i class="fa fa-database"></i>
                     <h4><strong>Tire Change</strong></h4>
@@ -485,7 +485,7 @@
     <!-- Javascripts
     ================================================== -->
     <script type="text/javascript" src="js/main.js"></script>
-  </body>
+</body>
 
 
 </html>

@@ -167,7 +167,7 @@
                             <div class="col-md-6 col-md-offset-4">
                                 <div class="checkbox">
                                     <label>
-                                        <input class="TermsAndConditions" type="checkbox" name="TermsAndConditions" required {{ old('TermsAndConditions') ? 'checked' : '' }}> I agree with the <a href="/termsandconditions">terms and conditions</a>
+                                        <input class="TermsAndConditions" type="checkbox" name="TermsAndConditions" required {{ old('TermsAndConditions') ? 'checked' : '' }}> I agree with the <a class="btn-link" href="/termsandconditions">terms and conditions</a>
                                         @if ($errors->has('TermsAndConditions'))
                                             <span class="help-block">
                                                 <strong>{{ $errors->first('TermsAndConditions') }}</strong>

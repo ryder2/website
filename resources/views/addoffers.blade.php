@@ -36,7 +36,7 @@
                             <div class="col-md-6">
                                 <select class="form-control" name="title">
                                     @foreach($jobtypes as $jobtype)
-                                      <option value="{{$jobtype->job}}">{{$jobtype->job}}</option>
+                                    <option value="{{$jobtype->job}}">{{$jobtype->job}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -97,18 +97,18 @@
 </script>
 <script type="text/javascript">
     $(document).ready(
-    function()
-    {
-         var carquery = new CarQuery();
-         carquery.init();
-         carquery.initYearMakeModelTrim('car_years', 'car_makes', 'car_models', 'car_model_trims');
-    });
+        function()
+        {
+           var carquery = new CarQuery();
+           carquery.init();
+           carquery.initYearMakeModelTrim('car_years', 'car_makes', 'car_models', 'car_model_trims');
+       });
     $("#myForm").submit(function(){
         $("[name=car_model_trims_txt]").val($("[name=car_model_trims]").find("option:selected").text());
         $("[name=car_makes_txt]").val($("[name=car_makes]").find("option:selected").text());
     });
 </script>
 @else
-    <center><b>You can't acces this section as a mechanic</b></center>
+<center><b>You can't acces this section as a mechanic</b></center>
 @endif
 @endsection

@@ -48,21 +48,21 @@ class AdminpanelController extends Controller
         $id = $request->userid;
         $options = $request->selectpicker;
 
-            if(in_array("Mecano", $options)) {
-                $offre = DB::table('users')->where('id', '=', $id)->update(['mecano' => 1]);
-            } else {
-                $offre = DB::table('users')->where('id', '=', $id)->update(['mecano' => 0]);
-            }
-            if(in_array("Approuved", $options)) {
-                $offre = DB::table('users')->where('id', '=', $id)->update(['approuved' => 1]);
-            } else {
-                $offre = DB::table('users')->where('id', '=', $id)->update(['approuved' => 0]);
-            }
-            if(in_array("Admin", $options)) {
-                $offre = DB::table('users')->where('id', '=', $id)->update(['role_id' => 1]);
-            } else {
-                $offre = DB::table('users')->where('id', '=', $id)->update(['role_id' => 0]);
-            }
+        if(in_array("Mecano", $options)) {
+            $offre = DB::table('users')->where('id', '=', $id)->update(['mecano' => 1]);
+        } else {
+            $offre = DB::table('users')->where('id', '=', $id)->update(['mecano' => 0]);
+        }
+        if(in_array("Approuved", $options)) {
+            $offre = DB::table('users')->where('id', '=', $id)->update(['approuved' => 1]);
+        } else {
+            $offre = DB::table('users')->where('id', '=', $id)->update(['approuved' => 0]);
+        }
+        if(in_array("Admin", $options)) {
+            $offre = DB::table('users')->where('id', '=', $id)->update(['role_id' => 1]);
+        } else {
+            $offre = DB::table('users')->where('id', '=', $id)->update(['role_id' => 0]);
+        }
         return redirect()->action('AdminpanelController@index');
     }
 }

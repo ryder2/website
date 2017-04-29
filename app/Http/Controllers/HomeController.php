@@ -6,8 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Auth;
 
-class HomeController extends Controller
-{
+class HomeController extends Controller {
     /**
      * Create a new controller instance.
      *
@@ -25,8 +24,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $offreapplications = DB::table('offreapplications')->get();
+        $offreapplications = [];
         $offres = DB::table('offres')->where([['city', '=', Auth::user()->ville], ['completed', '=', 0]])->orderBy('created_at','desc')->get();
+        foreach ($offres as $offre) {
+            $applications = DB::table('offreapplications')->where('offre_id', '=', $offre->id)->get();
+            foreach ($applications as $application) {
+                array_push($offreapplications, $application);
+            }
+        }
         return view('home', ['offres' => $offres, 'offreapplications' => $offreapplications]);
     }
 }

@@ -8,8 +8,7 @@ use Auth;
 use App\EventModel;
 use MaddHatter\LaravelFullcalendar\Event;
 
-class CalenderController extends Controller
-{
+class CalenderController extends Controller {
     /**
      * Create a new controller instance.
      *
@@ -46,11 +45,11 @@ class CalenderController extends Controller
                 $calenderofferfinal->wanteddate, //end time, must be a DateTime object or valid DateTime format (http://bit.ly/1z7QWbg),
                 1, //optional event ID
                 [
-                    'url' => 'http://laravel.dev/home'
+                'url' => 'http://laravel.dev/home'
                 ]
-            );
+                );
 
-            array_push($events, $event);
+                array_push($events, $event);
             }
 
             $eloquentEvent = EventModel::first(); //EventModel implements MaddHatter\LaravelFullcalendar\Event
@@ -84,11 +83,11 @@ class CalenderController extends Controller
                 $calenderofferfinal->wanteddate, //end time, must be a DateTime object or valid DateTime format (http://bit.ly/1z7QWbg),
                 1, //optional event ID
                 [
-                    'url' => 'http://laravel.dev/myoffers'
+                'url' => 'http://laravel.dev/myoffers'
                 ]
-            );
+                );
 
-            array_push($events, $event);
+                array_push($events, $event);
             }
 
             $eloquentEvent = EventModel::first(); //EventModel implements MaddHatter\LaravelFullcalendar\Event

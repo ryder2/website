@@ -30,11 +30,12 @@ Route::get('/deleteoffer', 'MyoffersController@delete');
 Route::get('/deleteofferapplication', 'MyoffersController@deleteofferapplication');
 Route::get('/addoffer', 'MyoffersController@add');
 Route::post('/addofferrecord', 'MyoffersController@create');
-Route::post('/applyoffer', 'MyoffersController@apply');
+Route::post('/applyoffer/{id}', 'MyoffersController@apply');
+Route::get('/applyoffer/{id}', 'MyoffersController@apply');
 Route::post('/applyonoffer', 'MyoffersController@applyonoffer');
 Route::post('/executeFilter', 'MyoffersController@search');
 
-Route::post('/viewofferapplication', 'MyoffersController@viewofferapplication');
+Route::post('/viewofferapplication/{id}', 'MyoffersController@viewofferapplication');
 Route::post('/acceptofferapplication', 'MyoffersController@acceptofferapplication');
 Route::post('/completedofferapplication', 'MyoffersController@completedofferapplication');
 

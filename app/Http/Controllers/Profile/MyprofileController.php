@@ -74,7 +74,7 @@ class MyprofileController extends Controller
                 $filename  = time() . '.' . $image->getClientOriginalExtension();
 
                 $path = public_path('/storage/users/cpacard/' . $filename);
-     
+                
                 Image::make($image->getRealPath())->resize(200, 100)->save($path);
                 $user->cartemecano = 'storage/users/cpacard/' . $filename;
             }
@@ -84,7 +84,7 @@ class MyprofileController extends Controller
                 $filename  = time() . '.' . $image->getClientOriginalExtension();
 
                 $path = public_path('/storage/users/profile/' . $filename);
-     
+                
                 Image::make($image->getRealPath())->resize(150, 200)->save($path);
                 $user->avatar = 'storage/users/profile/' . $filename;
             }

@@ -37,6 +37,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/bootbox.min.js') }}"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>
@@ -48,12 +49,12 @@
     <script>
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
-        ]) !!};
-    </script>
-    
-</head>
-<body>
-    <div id="app">
+            ]) !!};
+        </script>
+        
+    </head>
+    <body>
+        <div id="app">
     <!-- Navigation
     ==========================================-->
     <nav id="tf-menu" class="navbar navbar-inverse navbar-static-top">
@@ -65,58 +66,58 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="{{ url('/') }}">Road Mecs</a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav navbar-right">
-            <!-- Authentication Links -->
-            @if (Auth::guest())
-                <li><a href="{{ route('login') }}">Login</a></li>
-                <li><a href="{{ route('register') }}">Register</a></li>
-            @else
-                @if(Auth::user()->role_id == 1)
-                    <li><a href="{{ url('/adminpanel') }}">Admin Panel</a></li>
-                @endif
-                <li><a href="{{ url('/calendar') }}">Calendar</a></li>
-                @if (!Auth::user()->mecano)
-                    <li><a href="{{ url('/myoffers') }}">My offers</a></li>
-                @endif
-                @if (Auth::user()->mecano)
-                    <li><a href="{{ url('/home') }}">Offers</a></li>
-                @endif
-                <li><a href="{{ url('/myprofile') }}">My profile</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                        {{ Auth::user()->name }} <span class="caret"></span>
-                    </a>
-
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a href="{{ route('logout') }}"
-                                onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();">
-                                Logout
-                            </a>
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                {{ csrf_field() }}
-                            </form>
-                        </li>
-                    </ul>
-                </li>
-            @endif
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
-    </nav>
-
-        @yield('content')
+        </button>
+        <a class="navbar-brand" href="{{ url('/') }}">Road Mecs</a>
     </div>
 
-    <!-- Scripts -->
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        <!-- Authentication Links -->
+        @if (Auth::guest())
+        <li><a href="{{ route('login') }}">Login</a></li>
+        <li><a href="{{ route('register') }}">Register</a></li>
+        @else
+        @if(Auth::user()->role_id == 1)
+        <li><a href="{{ url('/adminpanel') }}">Admin Panel</a></li>
+        @endif
+        <li><a href="{{ url('/calendar') }}">Calendar</a></li>
+        @if (!Auth::user()->mecano)
+        <li><a href="{{ url('/myoffers') }}">My offers</a></li>
+        @endif
+        @if (Auth::user()->mecano)
+        <li><a href="{{ url('/home') }}">Offers</a></li>
+        @endif
+        <li><a href="{{ url('/myprofile') }}">My profile</a></li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                {{ Auth::user()->name }} <span class="caret"></span>
+            </a>
+
+            <ul class="dropdown-menu" role="menu">
+                <li>
+                    <a href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
+                    Logout
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    {{ csrf_field() }}
+                </form>
+            </li>
+        </ul>
+    </li>
+    @endif
+</ul>
+</div><!-- /.navbar-collapse -->
+</div><!-- /.container-fluid -->
+</nav>
+
+@yield('content')
+</div>
+
+<!-- Scripts -->
 
 </body>
 </html>
