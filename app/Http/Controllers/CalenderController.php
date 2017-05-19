@@ -55,6 +55,9 @@ class CalenderController extends Controller {
             $eloquentEvent = EventModel::first(); //EventModel implements MaddHatter\LaravelFullcalendar\Event
 
             $calendar = \Calendar::addEvents($events); 
+            $calendar->setOptions([
+            'buttonText' => [ 'today' => 'Today', 'month' => 'Month', 'week' => 'Week', 'day' => 'Day', 'list' => 'List'],
+            ]);
 
             return view('calender', compact('calendar'));
 
@@ -92,7 +95,10 @@ class CalenderController extends Controller {
 
             $eloquentEvent = EventModel::first(); //EventModel implements MaddHatter\LaravelFullcalendar\Event
 
-            $calendar = \Calendar::addEvents($events); 
+            $calendar = \Calendar::addEvents($events);
+            $calendar->setOptions([
+            'buttonText' => [ 'today' => 'Today', 'month' => 'Month', 'week' => 'Week', 'day' => 'Day', 'list' => 'List'],
+            ]);
 
             return view('calender', compact('calendar'));
         }

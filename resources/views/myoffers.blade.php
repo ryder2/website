@@ -163,12 +163,15 @@
                     label: '<i class="fa fa-times"></i> Cancel'
                 },
                 confirm: {
-                    label: '<i class="fa fa-check"></i> Delete'
+                    label: '<i class="fa fa-check"></i> Delete',
+                    className: "btn btn-danger",
                 }
             },
             callback: function (result) {
-                if(result)
+                if(result) {
+                    bootbox.dialog({ closeButton: false, message: '<div class="text-center"><i class="fa fa-spin fa-spinner"></i> Loading...</div>' })
                     $(form).submit();
+                }
             }
         });
     });

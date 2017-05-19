@@ -92,7 +92,10 @@ class BankAccountManagingController extends Controller {
 			return back()->with('warning',$e->getMessage());
 		}
 	}
-
+	public function change() {
+		return view('profile\editAccount');
+	}
+	
 	public function modify(Request $request)
 	{
 

@@ -73,95 +73,98 @@
 <!-- Stripe.js to collect payment details -->
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 <script>
-                // Set your Stripe publishable API key here
-                Stripe.setPublishableKey('pk_test_kJGCpNwM6w61Su1koNNv1Jf9');
-                $(function() {
-                  var $form = $('#payment-form');
-                  $form.submit(function(event) {
-                    // Clear any errors
-                    $form.find('.has-error').removeClass('has-error');
-                    // Disable the submit button to prevent repeated clicks:
-                    $form.find('.submit').prop('disabled', true).html("<i class='fa fa-spinner fa-spin'></i> Creating account");
-                    // Request a token from Stripe:
-                    Stripe.bankAccount.createToken($form, stripeResponseHandler);
-                    
-                    // Prevent the form from being submitted:
-                    return false;
-                });
-                  // Switch or hide 'routing number' depending on currency
-                  $('#currency').change(function(){
-                    $('#routing_number_div').show();
-                    $('#ssn_div').hide();
-                    $('#ssn_number').removeAttr('data-stripe');
-                    $('#account_number_label').text('Account Number').next('input').attr('placeholder', '');
-                    $('#routing_number').attr('data-stripe', 'routing_number');
-                    switch (this.value) {
-                      case "usd":
-                      $('#ssn_div').show();
-                      $('#ssn_number').attr('data-stripe', 'ssn_last_4');
-                      $('#routing_number_label').text('Routing Number').next('input').attr('placeholder', '111000000');
-                      break;
-                      case "eur":
-                        // No routing number needed
-                        $('#routing_number_div').hide();
-                        $('#routing_number').removeAttr('data-stripe');
-                        $('#account_number_label').text('IBAN').next('input').attr('placeholder','XX9828737432389');
-                        break;
-                        case "cad":
-                        $('#routing_number_label').text('Transit & Institution Number');
-                        break;
-                        case "gbp":
-                        $('#routing_number_label').text('Sort Code').next('input').attr('placeholder', '12-34-56');
-                        break;
-                        case "mxn":
-                        $('#routing_number_label').text('CLABE');
-                        break;
-                        case 'aud': case "nzd":
-                        $('#routing_number_label').text('BSB').next('input').attr('placeholder', '123456');
-                        break;
-                        case 'sgd': case "jpy": case "brl": case "hkd":
-                        $('#routing_number_label').text('Bank / Branch Code');
-                        break;
-                    }
-                });
+          // Set your Stripe publishable API key here
+          Stripe.setPublishableKey('pk_test_kJGCpNwM6w61Su1koNNv1Jf9');
+          $(function () {
+            var $form = $('#payment-form');
+            $form.submit(function (event) {
+              // Clear any errors
+              $form.find('.has-error').removeClass('has-error');
+              // Disable the submit button to prevent repeated clicks:
+              $form.find('.submit').prop('disabled', true).html("<i class='fa fa-spinner fa-spin'></i> Creating account");
+              // Request a token from Stripe:
+              Stripe.bankAccount.createToken($form, stripeResponseHandler);
 
-                  $('#account_holder_type').change(function(){
-                    switch (this.value) {
-                      case "individual":
-                      $('#company_div').hide();
-                      $('#business_tax_id').removeAttr('data-stripe');
-                      $('#business_name').removeAttr('data-stripe');
-                      break;
-                      case "company":
-                        // No routing number needed
-                        $('#company_div').show();
-                        $('#business_tax_id').attr('data-stripe', 'business_tax_id');
-                        $('#business_name').attr('data-stripe', 'business_name');
-                        break;
-                    }
-                });
-              });
+              // Prevent the form from being submitted:
+              return false;
+            });
+            // Switch or hide 'routing number' depending on currency
+            $('#currency').change(function () {
+              $('#routing_number_div').show();
+              $('#ssn_div').hide();
+              $('#ssn_number').removeAttr('data-stripe');
+              $('#account_number_label').text('Account Number').next('input').attr('placeholder', '');
+              $('#routing_number').attr('data-stripe', 'routing_number');
+              switch (this.value) {
+                case "usd":
+                  $('#ssn_div').show();
+                  $('#ssn_number').attr('data-stripe', 'ssn_last_4');
+                  $('#routing_number_label').text('Routing Number').next('input').attr('placeholder', '111000000');
+                  break;
+                case "eur":
+                  // No routing number needed
+                  $('#routing_number_div').hide();
+                  $('#routing_number').removeAttr('data-stripe');
+                  $('#account_number_label').text('IBAN').next('input').attr('placeholder', 'XX9828737432389');
+                  break;
+                case "cad":
+                  $('#routing_number_label').text('Transit & Institution Number');
+                  break;
+                case "gbp":
+                  $('#routing_number_label').text('Sort Code').next('input').attr('placeholder', '12-34-56');
+                  break;
+                case "mxn":
+                  $('#routing_number_label').text('CLABE');
+                  break;
+                case 'aud':
+                case "nzd":
+                  $('#routing_number_label').text('BSB').next('input').attr('placeholder', '123456');
+                  break;
+                case 'sgd':
+                case "jpy":
+                case "brl":
+                case "hkd":
+                  $('#routing_number_label').text('Bank / Branch Code');
+                  break;
+              }
+            });
 
-                function stripeResponseHandler(status, response) {
-                  var $form = $('#payment-form');
-                  if (response.error) {
-                    // Show the errors on the form
-                    $form.find('.errors').text(response.error.message).addClass('alert alert-danger');
-                    $form.find('.' + response.error.param).parent('.form-group').addClass('has-error');
-                    $form.find('button').prop('disabled', false).text('Add bank account'); // Re-enable submission
-                } 
-                  else { // Token was created!
-                    $form.find('.submit').html("<i class='fa fa-check'></i> Account added");
-                    
-                    // Get the token ID:
-                    var token = response.id;
-                    // Insert the token and name into the form so it gets submitted to the server:
-                    $form.append($('<input type="hidden" name="stripeToken" />').val(token));
-                    // Submit the form:
-                    $form.get(0).action = "{{ url('/bankaccountsetup') }}";
-                    $form.get(0).submit();
-                }
+            $('#account_holder_type').change(function () {
+              switch (this.value) {
+                case "individual":
+                  $('#company_div').hide();
+                  $('#business_tax_id').removeAttr('data-stripe');
+                  $('#business_name').removeAttr('data-stripe');
+                  break;
+                case "company":
+                  // No routing number needed
+                  $('#company_div').show();
+                  $('#business_tax_id').attr('data-stripe', 'business_tax_id');
+                  $('#business_name').attr('data-stripe', 'business_name');
+                  break;
+              }
+            });
+          });
+
+          function stripeResponseHandler(status, response) {
+            var $form = $('#payment-form');
+            if (response.error) {
+              // Show the errors on the form
+              $form.find('.errors').text(response.error.message).addClass('alert alert-danger');
+              $form.find('.' + response.error.param).parent('.form-group').addClass('has-error');
+              $form.find('button').prop('disabled', false).text('Add bank account'); // Re-enable submission
+            } else { // Token was created!
+              $form.find('.submit').html("<i class='fa fa-check'></i> Account added");
+
+              // Get the token ID:
+              var token = response.id;
+              // Insert the token and name into the form so it gets submitted to the server:
+              $form.append($('<input type="hidden" name="stripeToken" />').val(token));
+              // Submit the form:
+              $form.get(0).action = "{{ url('/bankaccountsetup') }}";
+              $form.get(0).submit();
             }
+          }
         </script>
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
@@ -407,6 +410,7 @@
 </div>
 </div>
 </div>
+<button type="button" class="btn btn-primary" onclick="window.location='{{ url('/bankaccountchange') }}'">Edit my account</button><br>
 </div>
 @endif
 

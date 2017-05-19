@@ -179,47 +179,49 @@
 		  });
 	  </script>
 	  <script type="text/javascript">
-		$('#filter').on('change', function() {
+		$('#filter').on('change', function () {
 			searchup(this.value);
 		})
 		var timer;
+
 		function searchup(keywords) {
 
-		   timer = setTimeout(function()
-		   {
-			var data = {
-				'keywords': keywords,
-				'_token': $('meta[name="csrf-token"]').attr('content')
-			};
-			$.post('/executeFilter', data, function(markup)
-			{
-				$('#search-results').html(markup);
-			});
-		}, 100);
-	   }
+			timer = setTimeout(function () {
+				var data = {
+					'keywords': keywords,
+					'_token': $('meta[name="csrf-token"]').attr('content')
+				};
+				$.post('/executeFilter', data, function (markup) {
+					$('#search-results').html(markup);
+				});
+			}, 100);
+		}
    </script>
    <script type="text/javascript">
-    $('.btn-danger').click(function(e){
-        var form = this.closest("form");
-        e.preventDefault();
-        bootbox.confirm({
-            backdrop: false,
-            title: "Are you sure?",
-            message: "Do you want to delete this offer? This cannot be undone.",
-            buttons: {
-                cancel: {
-                    label: '<i class="fa fa-times"></i> Cancel'
-                },
-                confirm: {
-                    label: '<i class="fa fa-check"></i> Delete'
-                }
-            },
-            callback: function (result) {
-                if(result)
-                    $(form).submit();
-            }
-        });
-    });
+   $('.btn-danger').click(function (e) {
+		var form = this.closest("form");
+		e.preventDefault();
+		bootbox.confirm({
+			backdrop: false,
+			title: "Are you sure?",
+			message: "Do you want to delete this offer? This cannot be undone.",
+			buttons: {
+				cancel: {
+					label: '<i class="fa fa-times"></i> Cancel'
+				},
+				confirm: {
+					label: '<i class="fa fa-check"></i> Delete',
+					className: "btn btn-danger",
+				}
+			},
+			callback: function (result) {
+				if (result) {
+					bootbox.dialog({ closeButton: false, message: '<div class="text-center"><i class="fa fa-spin fa-spinner"></i> Loading...</div>' })
+					$(form).submit();
+				}
+			}
+		});
+	});
     
 	</script>
    @else
