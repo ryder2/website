@@ -71,7 +71,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
+                            <div style="text-align: right;margin: 0px 20px 0px 0px">
                                 <button type="submit" class="btn btn-primary">
                                 Add Offer
                                 </button>

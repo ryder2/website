@@ -54,7 +54,7 @@
                         <div class="form-group">
                             <input type="hidden" name="id" value="{{ $offre->id }}">
                         </div>
-                        <button type="submit" class="btn btn-danger pull-right">Delete</button>
+                        <button type="submit" class="btn btn-danger delete pull-right">Delete</button>
                     </form>
                     @else
                     @if($acceptedofferapplication->completed)
@@ -151,7 +151,7 @@
     });
 </script>
 <script type="text/javascript">
-    $('.btn-danger').click(function(e){
+    $('.delete').click(function(e){
         var form = this.closest("form");
         e.preventDefault();
         bootbox.confirm({
