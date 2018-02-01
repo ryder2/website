@@ -120,7 +120,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <img src="img/mechanic.jpg" class="img-responsive">
+                    <img src="img/coffee.jpg" class="img-responsive">
                 </div>
                 <div class="col-md-6">
                     <div class="about-text">
@@ -162,45 +162,45 @@
                     <hr>
                 </div>
                 <div class="clearfix"></div>
-                <small><em>Here at RoadMecs, we engage ourselves at finding the closest Technician available in your area. We can also advise you free of charge and find a solution to your car problems from finding the cheapest parts to the closest garage near you.</em></small>
+                <small><em>Here at RoadMecs, we engage ourselves at finding the closest technician available in your area. We can also advise you free of charge and find a solution to your car problems from finding the cheapest parts to the closest garage near you.</em></small>
             </div>
             <div class="space"></div>
             <div class="row">
                 <div class="col-md-3 col-sm-6 service">
                     <i class="fa fa-graduation-cap"></i>
-                    <h4><strong>Dedicated Mechanics</strong></h4>
-                    <p>All of our mechanics are certified and possess a competence card, verified.</p>
+                    <h4><strong>Dedicated Technicien</strong></h4>
+                    <p>You can choose from a large number of technician applying on your offer.</p>
                 </div>
 
                 <div class="col-md-3 col-sm-6 service">
                     <i class="fa fa-car"></i>
                     <h4><strong>Car Checks</strong></h4>
-                    <p>Free advising by phone while browsing the list of our available technicians for a fee, you will always find someone available to assist you with your car issues.</p>
+                    <p>Free advising by phone while browsing the list of available technicians for a fee, you will always find someone available to assist you with your car issues.</p>
                 </div>
 
                 <div class="col-md-3 col-sm-6 service">
                     <i class="fa fa-dashboard"></i>
                     <h4><strong>Oil & Brake Checks</strong></h4>
-                    <p>With you lifestyle, not having much time to have a maintenance check on your car? No problem. We have the solution for you. Just reach a certified technician close to you, able to reach your location and help you with your needs.</p>
+                    <p>With you lifestyle, not having much time to have a maintenance check on your car? No problem. We have the solution for you. Just reach a technician close to you, able to reach your location and help you with your needs.</p>
                 </div>
                 
                 <div class="col-md-3 col-sm-6 service">
                     <i class="fa fa-road"></i>
                     <h4><strong>Breakdown Service</strong></h4>
-                    <p>Many car issues can be fixed where the problem occurred. While in a place permitted by law, a certified technician can reach you location and repair the issue on the spot.</p>
+                    <p>Many car issues can be fixed where the problem occurred. While in a place permitted by law, a technician can reach you location and repair the issue on the spot.</p>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-3 col-sm-6 service">
                     <i class="fa fa-database"></i>
                     <h4><strong>Tire Change</strong></h4>
-                    <p>Avoiding distant appointments and leaving your car for the day? We will engage ourselves to send you a certified technician to your location and have your tires changed or repaired without leaving the comfort of your house.</p>
+                    <p>Avoiding distant appointments and leaving your car for the day? We will engage ourselves to send you a technician to your location and have your tires changed or repaired without leaving the comfort of your house.</p>
                 </div>
                 
                 <div class="col-md-3 col-sm-6 service">
                     <i class="fa fa-flash"></i>
                     <h4><strong>Battery Change</strong></h4>
-                    <p>While cold seasons approach, or battery life ends without warning, our available technicians can assist you with diagnosing the charge system and replacing the battery on the spot.</p>
+                    <p>While cold seasons approach, or battery life ends without warning, available technicians can assist you with diagnosing the charge system and replacing the battery on the spot.</p>
                 </div>
             </div>
         </div>
@@ -213,32 +213,14 @@
             <div class="container">
 
                 <div class="section-title center">
-                    <h2>Selling only <strong>quality</strong> brands</h2>
+                    <h2>Associate only with <strong>quality</strong> providers</h2>
                     <div class="line">
                         <hr>
                     </div>
                 </div>
                 <div id="clients" class="owl-carousel owl-theme">
                     <div class="item">
-                        <img src="img/client/01.png">
-                    </div>
-                    <div class="item">
-                        <img src="img/client/02.png">
-                    </div>
-                    <div class="item">
-                        <img src="img/client/03.png">
-                    </div>
-                    <div class="item">
-                        <img src="img/client/04.png">
-                    </div>
-                    <div class="item">
-                        <img src="img/client/05.png">
-                    </div>
-                    <div class="item">
-                        <img src="img/client/06.png">
-                    </div>
-                    <div class="item">
-                        <img src="img/client/07.png">
+                        Put image here
                     </div>
                 </div>
 
